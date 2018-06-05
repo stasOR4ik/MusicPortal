@@ -11,16 +11,12 @@ namespace MusicPortal.Models
         public string Name { get; set; }
         private string PictureLink { get; set; }
         public Artist Artist { get; set; }
-        public List<Track> Tracks { get; set; }
-        public List<string> Tags { get; set; }
 
         public Album() { }
 
         public Album(string name)
         {
             Name = name;
-            Tracks = new List<Track>();
-            Tags = new List<string>();
         }
 
         public void SetPictureLink(string pictureLink)
