@@ -13,7 +13,6 @@ namespace MusicPortal.Models
         private string Biography { get; set; }
         public List<Track> Tracks { get; set; }
         public List<Album> Albums { get; set; }
-        public List<string> Tags { get; set; }
 
         public Artist() { }
 
@@ -22,7 +21,6 @@ namespace MusicPortal.Models
             Name = name;
             Tracks = new List<Track>();
             Albums = new List<Album>();
-            Tags = new List<string>();
         }
 
         public void SetPictureLink(string picturelink)
