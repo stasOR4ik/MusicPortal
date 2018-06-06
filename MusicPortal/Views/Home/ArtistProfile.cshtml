@@ -6,10 +6,10 @@
 
 <h1>@Model.Name profile</h1>
 <div class="row">
-    <div class="col-lg-4">
-        <img class="img-rounded" src="@Model.GetPictureLink()" />
+    <div class="col-lg-8">
+        <p>@Model.GetShortBiography()...<a target="_blank" href="/Home/ArtistBiography?Name=@Model.Name">Read more</a></p>
     </div>
-    <div>
-        <p>@Model.GetBiography()</p>
+    <div class="col-lg-4">
+        <img class="img-rounded" src="@Model.GetPictureLink()"/>
     </div>
 </div>

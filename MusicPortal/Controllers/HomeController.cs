@@ -10,19 +10,31 @@ namespace MusicPortal.Controllers
 {
     public class HomeController : Controller
     {
+        LastFMData _data;
+        int _numberOfArtistsOnStartPage = 50;
+
+        public HomeController()
+        {
+            _data = new LastFMData();
+        }
+
         public IActionResult Index()
         {
-            LastFMData a = new LastFMData();
-            return View(a.GetTopArtists(1, 10, 2));
+            return View(_data.GetTopArtists(1, _numberOfArtistsOnStartPage, 2));
         }
         
         [HttpGet]
         public IActionResult ArtistProfile(string Name)
         {
-            string name = Request.Query.FirstOrDefault(p => p.Key == "Name").Value;
-            LastFMData a = new LastFMData();
-            Artist artist = a.GetTopArtists(1, 10, 3).FirstOrDefault(p => p.Name == Name);
-            artist.SetBiography(a.GetArtistBiography(Name));
+            Artist artist = _data.GetTopArtists(1, _numberOfArtistsOnStartPage, 3).FirstOrDefault(p => p.Name == Name);
+            artist.SetShortBiography(_data.GetArtistBiography(Name, "summary"));
+            return View(artist);
+        }
+
+        public IActionResult ArtistBiography(string Name)
+        {
+            Artist artist = _data.GetTopArtists(1, _numberOfArtistsOnStartPage, 3).FirstOrDefault(p => p.Name == Name);
+            artist.SetBiography(_data.GetArtistBiography(Name, "content"));
             return View(artist);
         }
 

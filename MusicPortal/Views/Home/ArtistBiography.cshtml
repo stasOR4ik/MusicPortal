@@ -1,0 +1,8 @@
+﻿@using MusicPortal.Models
+@model Artist
+@{
+    ViewData["Title"] = Model.Name + " biography";
+}
+
+<h1>@Model.Name biography</h1>
+<p>@Model.GetBiography()</p>
