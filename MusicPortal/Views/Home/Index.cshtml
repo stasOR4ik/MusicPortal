@@ -3,12 +3,15 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<h1>Last.fm Top Artists</h1>
 <div class="row">
     @foreach (Artist artist in Model)
-    {
-    <div class="col-lg-2">
-        <img class="img-rounded center-block" src="@artist.GetPictureLink()" />
-        <p class="text-center">@artist.Name</p>
-    </div>
-    }
+     {
+        <a href="/Home/ArtistProfile?Name=@artist.Name">
+            <div class="col-lg-2">
+                <img class="img-rounded center-block" src="@artist.GetPictureLink()" />
+                <p class="text-center">@artist.Name</p>
+            </div>
+        </a>
+     }
 </div>
