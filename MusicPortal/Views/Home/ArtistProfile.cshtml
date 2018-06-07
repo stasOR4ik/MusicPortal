@@ -1,15 +1,37 @@
 ﻿@using MusicPortal.Models
-@model Artist
+@model ArtistProfile
 @{
-    ViewData["Title"] = Model.Name + " profile";
+    ViewData["Title"] = Model.Artist.Name + " profile";
 }
 
-<h1>@Model.Name profile</h1>
+<h1>@Model.Artist.Name profile</h1>
 <div class="row">
     <div class="col-lg-8">
-        <p>@Model.GetShortBiography()...<a target="_blank" href="/Home/ArtistBiography?Name=@Model.Name">Read more</a></p>
+        <p>@Model.Artist.GetShortBiography()...<a target="_blank" href="/Home/ArtistBiography?name=@Model.Artist.Name">Read more</a></p>
     </div>
     <div class="col-lg-4">
-        <img class="img-rounded" src="@Model.GetPictureLink()"/>
+        <img class="img-rounded" src="@Model.Artist.GetPictureLink()" />
     </div>
 </div>
+<div class="nav_tabs">
+    <div class="row">
+        <div class="col-lg-1">
+            <a href="/Home/ArtistProfile?name=@Model.Artist.Name&tab=0">Tracks</a>
+        </div>
+        <div class="col-lg-1">
+            <a href="/Home/ArtistProfile?name=@Model.Artist.Name&tab=1">Albums</a>
+        </div>
+        <div class="col-lg-1">
+            <a href="/Home/ArtistProfile?name=@Model.Artist.Name&tab=2">Similar</a>
+        </div>
+    </div>
+</div>
+@if(Model.Tab == 0)
+{
+    @Html.Partial("_PartialArtistTopTracks", Model.Artist.Tracks);
+}
+else if(Model.Tab == 1)
+{
+
+}
+

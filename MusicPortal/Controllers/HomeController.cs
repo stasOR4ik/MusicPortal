@@ -5,13 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MusicPortal.Models;
+using Newtonsoft.Json;
 
 namespace MusicPortal.Controllers
 {
     public class HomeController : Controller
     {
         LastFMData _data;
-        int _numberOfArtistsOnStartPage = 50;
+        int _numberOfArtistsOnStartPage = 10;
 
         public HomeController()
         {
@@ -23,18 +24,21 @@ namespace MusicPortal.Controllers
             return View(_data.GetTopArtists(1, _numberOfArtistsOnStartPage, 2));
         }
         
-        [HttpGet]
-        public IActionResult ArtistProfile(string Name)
+        public IActionResult ArtistProfile(string name, int tab = 0)
         {
-            Artist artist = _data.GetTopArtists(1, _numberOfArtistsOnStartPage, 3).FirstOrDefault(p => p.Name == Name);
-            artist.SetShortBiography(_data.GetArtistBiography(Name, "summary"));
-            return View(artist);
+            Artist artist = _data.GetTopArtists(1, _numberOfArtistsOnStartPage, 3).FirstOrDefault(p => p.Name == name);
+            artist.SetShortBiography(_data.GetArtistBiography(name, "summary"));
+            if(tab == 0)
+                artist.Tracks = _data.GetArtistTopTracks(name, 1, 20);
+            //else if (tab == 1)
+            //    artist.Albums = 
+            return View(new ArtistProfile(artist, tab));
         }
 
-        public IActionResult ArtistBiography(string Name)
+        public IActionResult ArtistBiography(string name)
         {
-            Artist artist = _data.GetTopArtists(1, _numberOfArtistsOnStartPage, 3).FirstOrDefault(p => p.Name == Name);
-            artist.SetBiography(_data.GetArtistBiography(Name, "content"));
+            Artist artist = _data.GetTopArtists(1, _numberOfArtistsOnStartPage, 3).FirstOrDefault(p => p.Name == name);
+            artist.SetBiography(_data.GetArtistBiography(name, "content"));
             return View(artist);
         }
 

@@ -14,17 +14,57 @@ namespace MusicPortal.Models
     {
         private string commonUrl = "http://ws.audioscrobbler.com/2.0/?api_key=6406cb88807bffe5b2492343145f8451&format=json&";
 
-        public List<Artist> GetTopArtists(int page, int limit, int pageSize)
+        public List<Artist> GetTopArtists(int page, int limit, int imageSize)
         {
             string artistsUrl = commonUrl + "method=chart.gettopartists&page=" + page + "&limit=" + limit;
             List<Artist> artists = new List<Artist>();
             foreach (JToken singer in TakeJObjectFromLastFM(artistsUrl)["artists"]["artist"])
             {
                 Artist artist = new Artist(singer.SelectToken("name").ToString());
-                artist.SetPictureLink(singer["image"][pageSize].SelectToken("#text").ToString());
+                artist.SetPictureLink(singer["image"][imageSize].SelectToken("#text").ToString());
                 artists.Add(artist);
             }
             return artists;
+        }
+
+        public List<Track> GetArtistTopTracks(string name, int page, int limit)
+        {
+            string tracksUrl = commonUrl + "method=artist.gettoptracks&page=" + page + "&limit=" + limit + "&artist=" + name;
+            List<Track> tracks = new List<Track>();
+            foreach(JToken song in TakeJObjectFromLastFM(tracksUrl).SelectToken("toptracks")["track"])
+            {
+                Track track = new Track(song.SelectToken("name").ToString());
+                track.SetPictureLink(GetTrackImage(name, track.Name));
+                track.SetDurationInMilliseconds(GetTrackDurationInMilliseconds(name, track.Name));
+                tracks.Add(track);
+            }
+            return tracks;
+        }
+
+        //public List<Album> GetArtistTopAlbums(string name, int page, int limit)
+        //{
+
+        //}
+
+        public string GetTrackDurationInMilliseconds(string artistName, string trackName)
+        {
+            string trackUrl = commonUrl + "method=track.getInfo&artist=" + artistName + "&track=" + trackName;
+            if (TakeJObjectFromLastFM(trackUrl).SelectToken("track") != null &&
+                TakeJObjectFromLastFM(trackUrl).SelectToken("track").SelectToken("duration") != null)
+                return TakeJObjectFromLastFM(trackUrl).SelectToken("track").SelectToken("duration").ToString();
+            else
+                return "0";
+        }
+
+        public string GetTrackImage(string artistName, string trackName)
+        {
+            string trackUrl = commonUrl + "method=track.getInfo&artist=" + artistName + "&track=" + trackName; 
+            if (TakeJObjectFromLastFM(trackUrl).SelectToken("track") != null &&
+                TakeJObjectFromLastFM(trackUrl).SelectToken("track").SelectToken("album") != null &&
+                TakeJObjectFromLastFM(trackUrl).SelectToken("track").SelectToken("album").SelectToken("image") != null)
+                return TakeJObjectFromLastFM(trackUrl).SelectToken("track").SelectToken("album").SelectToken("image")[0].SelectToken("#text").ToString();
+            else
+                return "";
         }
 
         public string GetArtistBiography(string artistName, string biographySize)   // biographySize = {"summary", "content"}
@@ -54,6 +94,7 @@ namespace MusicPortal.Models
             biography = biography.Split(" <a href")[0];
             return biography;
         }
+
         public JObject TakeJObjectFromLastFM(string url)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);

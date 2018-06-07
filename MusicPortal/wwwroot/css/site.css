@@ -37,3 +37,23 @@
 h1{
     text-align: center;
 }
+
+.nav_tabs > .row {
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: #e5e5e5;
+}
+
+.nav_tabs > .row > * > a:hover {
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    border-bottom-color: aqua;
+    text-decoration: none;
+    color: red;
+}
+
+.nav_tabs > .row > * > a {
+    font-size: larger;
+    color: black;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
