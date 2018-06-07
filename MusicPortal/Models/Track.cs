@@ -21,7 +21,7 @@ namespace MusicPortal.Models
 
         public void SetPictureLink(string pictureLink)
         {
-            string defaultPictureLink = "https://srv2.imgonline.com.ua/result_img/imgonline-com-ua-Resize-jmkHqVwKg2bq4I.png";
+            string defaultPictureLink = "images/track.png";
             PictureLink = pictureLink == "" ? defaultPictureLink : pictureLink;
         }
 

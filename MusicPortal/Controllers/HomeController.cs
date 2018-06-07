@@ -28,10 +28,10 @@ namespace MusicPortal.Controllers
         {
             Artist artist = _data.GetTopArtists(1, _numberOfArtistsOnStartPage, 3).FirstOrDefault(p => p.Name == name);
             artist.SetShortBiography(_data.GetArtistBiography(name, "summary"));
-            if(tab == 0)
-                artist.Tracks = _data.GetArtistTopTracks(name, 1, 20);
-            //else if (tab == 1)
-            //    artist.Albums = 
+            if (tab == 0)
+                artist.Tracks = _data.GetArtistTopTracks(name, 1, 10);
+            else if (tab == 1)
+                artist.Albums = _data.GetArtistTopAlbums(name, 1, 10);
             return View(new ArtistProfile(artist, tab));
         }
 
