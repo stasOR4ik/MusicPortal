@@ -21,7 +21,7 @@ namespace MusicPortal.Models
 
         public void SetPictureLink(string pictureLink)
         {
-            string defaultPictureLink = "https://lastfm-img2.akamaized.net/i/u/174s/c6f59c1e5e7240a4c0d427abd71f3dbb";
+            string defaultPictureLink = "images/track.png";
             PictureLink = pictureLink == "" ? defaultPictureLink : pictureLink;
         }
 

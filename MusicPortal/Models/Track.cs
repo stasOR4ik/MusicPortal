@@ -11,19 +11,17 @@ namespace MusicPortal.Models
         public string Name { get; set; }
         private string PictureLink { get; set; }
         private string Duration { get; set; }
-        public List<string> Tags { get; set; }
 
         public Track() { }
 
         public Track(string name)
         {
             Name = name;
-            Tags = new List<string>();
         }
 
         public void SetPictureLink(string pictureLink)
         {
-            string defaultPictureLink = "https://lastfm-img2.akamaized.net/i/u/174s/4128a6eb29f94943c9d206c08e625904";
+            string defaultPictureLink = "images/track.png";
             PictureLink = pictureLink == "" ? defaultPictureLink : pictureLink;
         }
 
