@@ -34,7 +34,7 @@ namespace MusicPortal.Models
             foreach(JToken song in TakeJObjectFromLastFM(tracksUrl).SelectToken("toptracks")["track"])
             {
                 Track track = new Track(song.SelectToken("name").ToString());
-                //track.SetPictureLink(GetTrackImage(name, track.Name));
+                track.SetPictureLink(GetTrackImage(name, track.Name));
                 track.SetDurationInMilliseconds(GetTrackDurationInMilliseconds(name, track.Name));
                 tracks.Add(track);
             }
@@ -48,41 +48,45 @@ namespace MusicPortal.Models
             foreach (JToken _album in TakeJObjectFromLastFM(albumsUrl).SelectToken("topalbums")["album"])
             {
                 Album album = new Album(_album.SelectToken("name").ToString());
-                //album.SetPictureLink(GetAlbumImage(name, album.Name));
+                album.SetPictureLink(GetAlbumImage(name, album.Name));
                 albums.Add(album);
             }
             return albums;
         }
 
+        public List<Artist> GetSimilarArtists(string name, int limit)
+        {
+            string artistsUrl = commonUrl + "method=artist.getsimilar&limit=" + limit + "&artist=" + name;
+            List<Artist> artists = new List<Artist>();
+            foreach (JToken singer in TakeJObjectFromLastFM(artistsUrl).SelectToken("similarartists")["artist"])
+            {
+                Artist artist = new Artist(singer.SelectToken("name").ToString());
+                artist.SetPictureLink(singer["image"][2].SelectToken("#text").ToString());
+                artists.Add(artist);
+            }
+            return artists;
+        }
+
         public string GetTrackDurationInMilliseconds(string artistName, string trackName)
         {
             string trackUrl = commonUrl + "method=track.getInfo&artist=" + artistName + "&track=" + trackName;
-            if (TakeJObjectFromLastFM(trackUrl).SelectToken("track") != null &&
-                TakeJObjectFromLastFM(trackUrl).SelectToken("track").SelectToken("duration") != null)
-                return TakeJObjectFromLastFM(trackUrl).SelectToken("track").SelectToken("duration").ToString();
-            else
-                return "0";
+            JObject jsonData = TakeJObjectFromLastFM(trackUrl);
+            return jsonData?.SelectToken("track")?.SelectToken("duration") != null ? jsonData.SelectToken("track").SelectToken("duration").ToString() : "0";
         }
 
         public string GetTrackImage(string artistName, string trackName)
         {
-            string trackUrl = commonUrl + "method=track.getInfo&artist=" + artistName + "&track=" + trackName; 
-            if (TakeJObjectFromLastFM(trackUrl).SelectToken("track") != null &&
-                TakeJObjectFromLastFM(trackUrl).SelectToken("track").SelectToken("album") != null &&
-                TakeJObjectFromLastFM(trackUrl).SelectToken("track").SelectToken("album").SelectToken("image") != null)
-                return TakeJObjectFromLastFM(trackUrl).SelectToken("track").SelectToken("album").SelectToken("image")[0].SelectToken("#text").ToString();
-            else
-                return "";
+            string trackUrl = commonUrl + "method=track.getInfo&artist=" + artistName + "&track=" + trackName;
+            JObject jsonData = TakeJObjectFromLastFM(trackUrl);
+            return jsonData.SelectToken("track")?.SelectToken("album")?.SelectToken("image") != null ? 
+                jsonData.SelectToken("track").SelectToken("album").SelectToken("image")[0].SelectToken("#text").ToString() : "";
         }
 
         public string GetAlbumImage(string artistName, string albumName)
         {
             string albumUrl = commonUrl + "method=album.getInfo&artist=" + artistName + "&album=" + albumName;
-            if (TakeJObjectFromLastFM(albumUrl).SelectToken("album") != null &&
-                TakeJObjectFromLastFM(albumUrl).SelectToken("album").SelectToken("image") != null)
-                return TakeJObjectFromLastFM(albumUrl).SelectToken("album").SelectToken("image")[0].SelectToken("#text").ToString();
-            else
-                return "";
+            JObject jsonData = TakeJObjectFromLastFM(albumUrl);
+            return jsonData.SelectToken("album")?.SelectToken("image") != null ? jsonData.SelectToken("album").SelectToken("image")[0].SelectToken("#text").ToString() : "";
         }
 
         public string GetArtistBiography(string artistName, string biographySize)   // biographySize = {"summary", "content"}
