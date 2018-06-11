@@ -31,6 +31,7 @@ namespace MusicPortal
             {
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
+                app.UseStaticFiles();
             }
             else
             {

@@ -76,6 +76,24 @@ namespace MusicPortal.Models
             return artist;
         }
 
+        public Album GetArtistAlbum(string artistName, string albumName)
+        {
+            string albumUrl = commonUrl + "method=album.getinfo&artist=" + artistName + "&album=" + albumName;
+            JObject jsonData = TakeJObjectFromLastFM(albumUrl);
+            Album album = new Album(albumName);
+            album.SetPictureLink(jsonData.SelectToken("album")["image"][3].SelectToken("#text").ToString());
+            album.SetShortBiography(jsonData.SelectToken("album")?.SelectToken("wiki")?.SelectToken("summary")?.ToString()??"");
+            album.Artist = SearchArtist(artistName, 1);
+            foreach(JToken song in jsonData.SelectToken("album").SelectToken("tracks")["track"])
+            {
+                Track track = new Track(song.SelectToken("name").ToString());
+                track.SetPictureLink(jsonData.SelectToken("album")["image"][0].SelectToken("#text").ToString());
+                track.SetDurationInMilliseconds(GetTrackDurationInMilliseconds(artistName, track.Name));
+                album.Tracks.Add(track);
+            }
+            return album;
+        }
+
         public string GetTrackDurationInMilliseconds(string artistName, string trackName)
         {
             string trackUrl = commonUrl + "method=track.getInfo&artist=" + artistName + "&track=" + trackName;
@@ -94,7 +112,7 @@ namespace MusicPortal.Models
         {
             string albumUrl = commonUrl + "method=album.getInfo&artist=" + artistName + "&album=" + albumName;
             JObject jsonData = TakeJObjectFromLastFM(albumUrl);
-            return jsonData.SelectToken("album")?.SelectToken("image")?[0]?.SelectToken("#text")?.ToString()??"";
+            return jsonData.SelectToken("album")?.SelectToken("image")?[2]?.SelectToken("#text")?.ToString()??"";
         }
 
         public string GetArtistBiography(string artistName, string biographySize)   // biographySize = {"summary", "content"}

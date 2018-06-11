@@ -1,20 +1,16 @@
 ﻿@using MusicPortal.Models
-@model List<Album>
-@{
-    int counter = 1;
-}
+@model Artist
+@{}
 
-<table class="table table-bordered table-hover table-responsive table-striped">
-    <tr><th>#</th><th>Album</th></tr>
-    @foreach (Album album in Model)
+<h1>Top Albums</h1>
+<div class="row">
+    @foreach (Album album in Model.Albums)
     {
-        <tr>
-            <td>@counter</td>
-            <td>
-                <img class="img-circle" src="@album.GetPictureLink()" />
-                @album.Name
-            </td>
-        </tr>
-        counter++;
+        <a href="/Home/ArtistAlbum?artistName=@Model.Name&albumName=@album.Name">
+            <div class="col-lg-2">
+                <img class="img-rounded center-block" src="@album.GetPictureLink()" />
+                <p class="text-center">@album.Name</p>
+            </div>
+        </a>
     }
-</table>
+</div>

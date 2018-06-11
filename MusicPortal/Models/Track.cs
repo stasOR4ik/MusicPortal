@@ -21,7 +21,7 @@ namespace MusicPortal.Models
 
         public void SetPictureLink(string pictureLink)
         {
-            string defaultPictureLink = "images/track.png";
+            string defaultPictureLink = "../images/song.png";
             PictureLink = pictureLink == "" ? defaultPictureLink : pictureLink;
         }
 

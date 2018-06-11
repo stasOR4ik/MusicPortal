@@ -1,0 +1,34 @@
+﻿@using MusicPortal.Models
+@model Album
+@{
+    ViewData["Title"] = "Home Page";
+    int counter = 1;
+}
+
+<h1><a href="/Home/ArtistProfile?name=@Model.Artist.Name">@Model.Artist.Name</a></h1>
+<h1>@Model.Name</h1>
+<div class="row">
+    <div class="col-lg-4">
+        <img class="img-rounded" src="@Model.GetPictureLink()" />
+    </div>
+    <div class="col-lg-8">
+        @if (Model.Tracks.Count != 0)
+        {
+            <table class="table table-bordered table-hover table-responsive table-striped">
+                <tr><th>#</th><th>Track</th><th>Duration</th></tr>
+                @foreach (Track track in Model.Tracks)
+                {
+                    <tr>
+                        <td>@counter</td>
+                        <td>
+                            <img class="img-circle" src="@track.GetPictureLink()" />
+                            @track.Name
+                        </td>
+                        <td>@track.GetDuration()</td>
+                    </tr>
+                    counter++;
+                }
+            </table>
+        }
+    </div>
+</div>
