@@ -43,6 +43,11 @@ namespace MusicPortal.Controllers
             return View(new ArtistProfile(artist, tab));
         }
 
+        public IActionResult ArtistAlbum(string artistName, string albumName)
+        {
+            return View(_data.GetArtistAlbum(artistName, albumName));
+        }
+
         public IActionResult ArtistBiography(string name)
         {
             Artist artist = _data.GetTopArtists(1, _numberOfArtistsOnStartPage, 3).FirstOrDefault(p => p.Name == name);
