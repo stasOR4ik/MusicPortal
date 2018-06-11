@@ -26,7 +26,7 @@ namespace MusicPortal.Controllers
         
         public IActionResult ArtistProfile(string name, int tab = 0)
         {
-            Artist artist = _data.GetTopArtists(1, _numberOfArtistsOnStartPage, 3).FirstOrDefault(p => p.Name == name);
+            Artist artist = _data.SearchArtist(name, 1);
             artist.SetShortBiography(_data.GetArtistBiography(name, "summary"));
             if (tab == 1)
             {
