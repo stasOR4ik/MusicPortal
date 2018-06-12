@@ -1,17 +1,19 @@
 ﻿@using MusicPortal.Models
-@model List<Artist>
+@model Index
 @{
     ViewData["Title"] = "Home Page";
 }
 <h1>Last.fm Top Artists</h1>
+
 <div class="row">
-    @foreach (Artist artist in Model)
-     {
+    @foreach (Artist artist in Model.Artists)
+    {
         <a href="/Home/ArtistProfile?name=@artist.Name">
             <div class="col-lg-2">
                 <img class="img-rounded center-block" src="@artist.GetPictureLink()" />
                 <p class="text-center">@artist.Name</p>
             </div>
         </a>
-     }
+    }
 </div>
+@Html.Partial("_PartialPagination", Model)

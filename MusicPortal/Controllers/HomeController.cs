@@ -12,16 +12,17 @@ namespace MusicPortal.Controllers
     public class HomeController : Controller
     {
         LastFMData _data;
-        int _numberOfArtistsOnStartPage = 10;
+        int _numberOfArtistsOnStartPage = 12;
 
         public HomeController()
         {
             _data = new LastFMData();
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page = 1, int numberOfArtistsOnStartPage = 12)
         {
-            return View(_data.GetTopArtists(1, _numberOfArtistsOnStartPage, 2));
+            _numberOfArtistsOnStartPage = numberOfArtistsOnStartPage;
+            return View(new Index(_data.GetTopArtists(page, _numberOfArtistsOnStartPage, 2), page, numberOfArtistsOnStartPage));
         }
         
         public IActionResult ArtistProfile(string name, int tab = 0)
@@ -30,7 +31,7 @@ namespace MusicPortal.Controllers
             artist.SetShortBiography(_data.GetArtistBiography(name, "summary"));
             if (tab == 1)
             {
-                artist.Albums = _data.GetArtistTopAlbums(name, 1, 10);
+                artist.Albums = _data.GetArtistTopAlbums(name, 1, 12);
             }
             else if (tab == 2)
             {
@@ -38,7 +39,7 @@ namespace MusicPortal.Controllers
             }
             else
             {
-                artist.Tracks = _data.GetArtistTopTracks(name, 1, 10);
+                artist.Tracks = _data.GetArtistTopTracks(name, 1, 15);
             }
             return View(new ArtistProfile(artist, tab));
         }

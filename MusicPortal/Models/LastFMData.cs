@@ -19,7 +19,7 @@ namespace MusicPortal.Models
             string artistsUrl = commonUrl + "method=chart.gettopartists&page=" + page + "&limit=" + limit;
             List<Artist> artists = new List<Artist>();
             foreach (JToken singer in TakeJObjectFromLastFM(artistsUrl)["artists"]["artist"])
-            {
+            { 
                 Artist artist = new Artist(singer.SelectToken("name").ToString());
                 artist.SetPictureLink(singer["image"][imageSize].SelectToken("#text").ToString());
                 artists.Add(artist);
