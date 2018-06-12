@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Core;
 using Microsoft.AspNetCore.Mvc;
 using MusicPortal.Models;
 using Newtonsoft.Json;

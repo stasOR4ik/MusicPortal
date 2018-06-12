@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace MusicPortal.Models
+namespace Core
 {
     public class LastFMData
     {
@@ -138,8 +138,8 @@ namespace MusicPortal.Models
                     IsRun = false;
                 }
             }
-            biography = biography.Split("http")[0];
-            biography = biography.Split(" <a href")[0];
+            biography = biography.Split(new[] { "http" }, StringSplitOptions.None)[0];
+            biography = biography.Split(new[] { " <a href" }, StringSplitOptions.None)[0];
             return biography;
         }
 
