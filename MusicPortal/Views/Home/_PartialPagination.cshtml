@@ -1,0 +1,39 @@
+﻿@using MusicPortal.Models
+@model Index
+@{ }
+
+<div class="row">
+    <div class="col-lg-4 col-lg-offset-2">
+        <ul class="pagination">
+            @if (Model.Page > 4)
+            {
+                <li><a href="/Home/Index?page=@(Model.Page - 4)&numberOfArtistsOnStartPage=@Model.NumberOfArtistsOnStartPage">@(Model.Page - 4)</a></li>
+                <li><a>...</a></li>
+            }
+            @if (Model.Page > 1)
+            {
+                <li><a href="/Home/Index?page=@(Model.Page - 1)&numberOfArtistsOnStartPage=@Model.NumberOfArtistsOnStartPage">@(Model.Page - 1)</a></li>
+            }
+            <li><a id="taken_property">@Model.Page</a></li>
+            <li><a href="/Home/Index?page=@(Model.Page + 1)&numberOfArtistsOnStartPage=@Model.NumberOfArtistsOnStartPage">@(Model.Page + 1)</a></li>
+            <li><a>...</a></li>
+            <li><a href="/Home/Index?page=@(Model.Page + 4)&numberOfArtistsOnStartPage=@Model.NumberOfArtistsOnStartPage">@(Model.Page + 4)</a></li>
+        </ul>
+    </div>
+    <div class="col-lg-4">
+        <ul class="pagination">
+            @if (Model.NumberOfArtistsOnStartPage > 4)
+            {
+                <li><a href="/Home/Index?page=@Model.Page&numberOfArtistsOnStartPage=@(Model.NumberOfArtistsOnStartPage - 4)">@(Model.NumberOfArtistsOnStartPage - 4)</a></li>
+                <li><a>...</a></li>
+            }
+            @if (Model.NumberOfArtistsOnStartPage > 1)
+            {
+                <li><a href="/Home/Index?page=@Model.Page&numberOfArtistsOnStartPage=@(Model.NumberOfArtistsOnStartPage - 1)">@(Model.NumberOfArtistsOnStartPage - 1)</a></li>
+            }
+            <li><a id="taken_property">@Model.NumberOfArtistsOnStartPage</a></li>
+            <li><a href="/Home/Index?page=@Model.Page&numberOfArtistsOnStartPage=@(Model.NumberOfArtistsOnStartPage + 1)">@(Model.NumberOfArtistsOnStartPage + 1)</a></li>
+            <li><a>...</a></li>
+            <li><a href="/Home/Index?page=@Model.Page&numberOfArtistsOnStartPage=@(Model.NumberOfArtistsOnStartPage + 4)">@(Model.NumberOfArtistsOnStartPage + 4)</a></li>
+        </ul>
+    </div>
