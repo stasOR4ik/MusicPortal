@@ -19,7 +19,7 @@ namespace Core
             string artistsUrl = commonUrl + "method=chart.gettopartists&page=" + page + "&limit=" + limit;
             List<Artist> artists = new List<Artist>();
             foreach (JToken singer in TakeJObjectFromLastFM(artistsUrl)["artists"]["artist"])
-            { 
+            {
                 Artist artist = new Artist(singer.SelectToken("name").ToString());
                 artist.SetPictureLink(singer["image"][imageSize].SelectToken("#text").ToString());
                 artists.Add(artist);
@@ -31,7 +31,7 @@ namespace Core
         {
             string tracksUrl = commonUrl + "method=artist.gettoptracks&page=" + page + "&limit=" + limit + "&artist=" + name;
             List<Track> tracks = new List<Track>();
-            foreach(JToken song in TakeJObjectFromLastFM(tracksUrl).SelectToken("toptracks")["track"])
+            foreach (JToken song in TakeJObjectFromLastFM(tracksUrl).SelectToken("toptracks")["track"])
             {
                 Track track = new Track(song.SelectToken("name").ToString());
                 track.SetPictureLink(GetTrackImage(name, track.Name));
@@ -82,9 +82,9 @@ namespace Core
             JObject jsonData = TakeJObjectFromLastFM(albumUrl);
             Album album = new Album(albumName);
             album.SetPictureLink(jsonData.SelectToken("album")["image"][3].SelectToken("#text").ToString());
-            album.SetShortBiography(jsonData.SelectToken("album")?.SelectToken("wiki")?.SelectToken("summary")?.ToString()??"");
+            album.SetShortBiography(jsonData.SelectToken("album")?.SelectToken("wiki")?.SelectToken("summary")?.ToString() ?? "");
             album.Artist = SearchArtist(artistName, 1);
-            foreach(JToken song in jsonData.SelectToken("album").SelectToken("tracks")["track"])
+            foreach (JToken song in jsonData.SelectToken("album").SelectToken("tracks")["track"])
             {
                 Track track = new Track(song.SelectToken("name").ToString());
                 track.SetPictureLink(jsonData.SelectToken("album")["image"][0].SelectToken("#text").ToString());
@@ -98,21 +98,21 @@ namespace Core
         {
             string trackUrl = commonUrl + "method=track.getInfo&artist=" + artistName + "&track=" + trackName;
             JObject jsonData = TakeJObjectFromLastFM(trackUrl);
-            return jsonData.SelectToken("track")?.SelectToken("duration")?.ToString()??"0";
+            return jsonData.SelectToken("track")?.SelectToken("duration")?.ToString() ?? "0";
         }
 
         public string GetTrackImage(string artistName, string trackName)
         {
             string trackUrl = commonUrl + "method=track.getInfo&artist=" + artistName + "&track=" + trackName;
             JObject jsonData = TakeJObjectFromLastFM(trackUrl);
-            return jsonData.SelectToken("track")?.SelectToken("album")?.SelectToken("image")?[0]?.SelectToken("#text")?.ToString()??"";
+            return jsonData.SelectToken("track")?.SelectToken("album")?.SelectToken("image")?[0]?.SelectToken("#text")?.ToString() ?? "";
         }
 
         public string GetAlbumImage(string artistName, string albumName)
         {
             string albumUrl = commonUrl + "method=album.getInfo&artist=" + artistName + "&album=" + albumName;
             JObject jsonData = TakeJObjectFromLastFM(albumUrl);
-            return jsonData.SelectToken("album")?.SelectToken("image")?[2]?.SelectToken("#text")?.ToString()??"";
+            return jsonData.SelectToken("album")?.SelectToken("image")?[2]?.SelectToken("#text")?.ToString() ?? "";
         }
 
         public string GetArtistBiography(string artistName, string biographySize)   // biographySize = {"summary", "content"}
