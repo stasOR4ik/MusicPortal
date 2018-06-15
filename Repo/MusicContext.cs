@@ -18,5 +18,17 @@ namespace Repo
         {
             Database.EnsureCreated();
         }
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+
+        //    //modelBuilder.Entity<ArtistSimilarArtists>()
+        //    //    .HasKey(p => p.Id);
+
+        //    //modelBuilder.Entity<ArtistSimilarArtists>()
+        //    //    .HasMany(p => p.SimilarArtists)
+        //    //    .WithOne(t => t.SimilarArtists)
+        //    //    .HasForeignKey(k => k.Id);
+        //}
     }
 }

@@ -61,3 +61,11 @@ h1 {
 #taken_property {
     background-color:chartreuse;
 }
+
+.pick_out_block:hover > * {
+    background-color: #F6F5F5;
+}
+
+input.margin_10px {
+    margin:10px;
+}

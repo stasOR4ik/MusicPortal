@@ -6,9 +6,9 @@
 <div class="row">
     @foreach (Artist artist in Model)
     {
-        <a href="/Home/ArtistProfile?name=@artist.Name">
+        <a class="pick_out_block" href="/Home/ArtistProfile?name=@artist.Name">
             <div class="col-lg-2">
-                <img class="img-rounded center-block" src="@artist.GetPictureLink()" />
+                <img class="img-rounded center-block" src="@artist.PictureLink" />
                 <p class="text-center">@artist.Name</p>
             </div>
         </a>

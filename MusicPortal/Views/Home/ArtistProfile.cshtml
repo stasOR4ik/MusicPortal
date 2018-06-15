@@ -7,10 +7,10 @@
 <h1>@Model.Artist.Name profile</h1>
 <div class="row">
     <div class="col-lg-8">
-        <p>@Model.Artist.GetShortBiography()...<a target="_blank" href="/Home/ArtistBiography?name=@Model.Artist.Name">Read more</a></p>
+        <p>@Model.Artist.ShortBiography...<a target="_blank" href="/Home/ArtistBiography?name=@Model.Artist.Name">Read more</a></p>
     </div>
     <div class="col-lg-4">
-        <img class="img-rounded" src="@Model.Artist.GetPictureLink()" />
+        <img class="img-rounded" src="@Model.Artist.PictureLink" />
     </div>
 </div>
 <div class="nav_tabs">

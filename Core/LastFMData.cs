@@ -67,11 +67,19 @@ namespace Core
             return artists;
         }
 
-        public Artist SearchArtist(string name, int limit)
+        public Artist SearchArtist(string name, int limit, bool isShorBiography)
         {
             string artistUrl = commonUrl + "method=artist.search&limit=" + limit + "&artist=" + name;
             JToken jsonData = TakeJObjectFromLastFM(artistUrl).SelectToken("results").SelectToken("artistmatches").SelectToken("artist")[0];
             Artist artist = new Artist(jsonData.SelectToken("name").ToString());
+            if(isShorBiography)
+            {
+                artist.ShortBiography = GetArtistBiography(name, "summary");
+            }
+            else
+            {
+                artist.Biography = GetArtistBiography(name, "context");
+            }
             artist.SetPictureLink(jsonData.SelectToken("image")[2].SelectToken("#text").ToString());
             return artist;
         }
@@ -82,8 +90,7 @@ namespace Core
             JObject jsonData = TakeJObjectFromLastFM(albumUrl);
             Album album = new Album(albumName);
             album.SetPictureLink(jsonData.SelectToken("album")["image"][3].SelectToken("#text").ToString());
-            album.SetShortBiography(jsonData.SelectToken("album")?.SelectToken("wiki")?.SelectToken("summary")?.ToString() ?? "");
-            album.Artist = SearchArtist(artistName, 1);
+            album.Artist = SearchArtist(artistName, 1, true);
             foreach (JToken song in jsonData.SelectToken("album").SelectToken("tracks")["track"])
             {
                 Track track = new Track(song.SelectToken("name").ToString());

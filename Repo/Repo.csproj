@@ -126,6 +126,18 @@
     <Compile Include="Migrations\20180613092631_Adding Database.designer.cs">
       <DependentUpon>20180613092631_Adding Database.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20180613104337_Fix biography and picture problem.cs" />
+    <Compile Include="Migrations\20180613104337_Fix biography and picture problem.designer.cs">
+      <DependentUpon>20180613104337_Fix biography and picture problem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20180613111042_Add biography and picture.cs" />
+    <Compile Include="Migrations\20180613111042_Add biography and picture.designer.cs">
+      <DependentUpon>20180613111042_Add biography and picture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20180613140132_Fix problem with SimilarArtist.cs" />
+    <Compile Include="Migrations\20180613140132_Fix problem with SimilarArtist.designer.cs">
+      <DependentUpon>20180613140132_Fix problem with SimilarArtist.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MusicContextModelSnapshot.cs" />
     <Compile Include="MusicContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

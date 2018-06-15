@@ -7,35 +7,46 @@ using Core;
 using Microsoft.AspNetCore.Mvc;
 using MusicPortal.Models;
 using Newtonsoft.Json;
+using Repo;
 
 namespace MusicPortal.Controllers
 {
     public class HomeController : Controller
     {
+        MusicContext _db;
         LastFMData _data;
         int numberOfArtistsOnStartPage = 12;
 
-        public HomeController()
+        public HomeController(MusicContext musicContext)
         {
+            _db = musicContext;
             _data = new LastFMData();
         }
 
         public IActionResult Index(int page = 1, int numberOfArtistsOnIndex = 12)
         {
             numberOfArtistsOnStartPage = numberOfArtistsOnIndex;
-            return View(new Index(_data.GetTopArtists(page, numberOfArtistsOnStartPage, 2), page, numberOfArtistsOnStartPage));
+            Index index = new Index(_data.GetTopArtists(page, numberOfArtistsOnStartPage, 2), page, numberOfArtistsOnStartPage);
+            return View(index);
         }
         
         public IActionResult ArtistProfile(string name, int tab = 0)
         {
-            Artist artist = _data.SearchArtist(name, 1);
-            artist.SetShortBiography(_data.GetArtistBiography(name, "summary"));
+            Artist artist = _data.SearchArtist(name, 1, true);
             if (tab == 1)
             {
                 artist.Albums = _data.GetArtistTopAlbums(name, 1, 12);
             }
             else if (tab == 2)
             {
+                //foreach (Artist similarArtist in _data.GetSimilarArtists(name, 12))
+                //{
+                //    _db.Artists.Add(similarArtist);
+                //    _db.SaveChanges();
+                //}
+                //artist.SimilarArtists.SimilarArtists = _data.GetSimilarArtists(name, 12);
+                //_db.Artists.Add(artist);
+                //_db.SaveChanges();
                 artist.SimilarArtists = _data.GetSimilarArtists(name, 12);
             }
             else
@@ -52,8 +63,7 @@ namespace MusicPortal.Controllers
 
         public IActionResult ArtistBiography(string name)
         {
-            Artist artist = _data.SearchArtist(name, 1);
-            artist.SetBiography(_data.GetArtistBiography(name, "content"));
+            Artist artist = _data.SearchArtist(name, 1, false);
             return View(artist);
         }
 
