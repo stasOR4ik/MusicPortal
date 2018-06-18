@@ -1,4 +1,4 @@
-﻿@using MusicPortal.Models
+﻿@using Core
 @model Artist
 @{}
 
@@ -6,9 +6,9 @@
 <div class="row">
     @foreach (Album album in Model.Albums)
     {
-        <a href="/Home/ArtistAlbum?artistName=@Model.Name&albumName=@album.Name">
+        <a class="pick_out_block" href="/Home/ArtistAlbum?artistName=@Model.Name&albumName=@album.Name">
             <div class="col-lg-2">
-                <img class="img-rounded center-block" src="@album.GetPictureLink()" />
+                <img class="img-rounded center-block" src="@album.PictureLink" />
                 <p class="text-center">@album.Name</p>
             </div>
         </a>

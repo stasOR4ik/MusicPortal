@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MusicPortal.Models
+namespace Core
 {
     public class Track
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        private string PictureLink { get; set; }
-        private string Duration { get; set; }
+        public string PictureLink { get; set; }
+        public string Duration { get; set; }
 
         public Track() { }
 
@@ -23,11 +23,6 @@ namespace MusicPortal.Models
         {
             string defaultPictureLink = "../images/song.png";
             PictureLink = pictureLink == "" ? defaultPictureLink : pictureLink;
-        }
-
-        public string GetPictureLink()
-        {
-            return PictureLink;
         }
 
         public void SetDurationInMilliseconds(string millisecondsDuration)
@@ -49,11 +44,5 @@ namespace MusicPortal.Models
             seconds %= 60;
             Duration = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
         }
-
-        public string GetDuration()
-        {
-            return Duration;
-        }
-
     }
 }

@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Core;
 using Microsoft.AspNetCore.Mvc;
 using MusicPortal.Models;
 using Newtonsoft.Json;
+using Repo;
 
 namespace MusicPortal.Controllers
 {
     public class HomeController : Controller
     {
+        MusicContext _db;
         LastFMData _data;
         int numberOfArtistsOnStartPage = 12;
 
-        public HomeController()
+        public HomeController(MusicContext musicContext)
         {
+            _db = musicContext;
             _data = new LastFMData();
         }
 
@@ -25,23 +29,9 @@ namespace MusicPortal.Controllers
             return View(new Index(_data.GetTopArtists(page, numberOfArtistsOnStartPage, 2), page, numberOfArtistsOnStartPage));
         }
         
-        public IActionResult ArtistProfile(string name, int tab = 0)
+        public IActionResult ArtistProfile(string name)
         {
-            Artist artist = _data.SearchArtist(name, 1);
-            artist.SetShortBiography(_data.GetArtistBiography(name, "summary"));
-            if (tab == 1)
-            {
-                artist.Albums = _data.GetArtistTopAlbums(name, 1, 12);
-            }
-            else if (tab == 2)
-            {
-                artist.SimilarArtists = _data.GetSimilarArtists(name, 12);
-            }
-            else
-            {
-                artist.Tracks = _data.GetArtistTopTracks(name, 1, 15);
-            }
-            return View(new ArtistProfile(artist, tab));
+            return View(_data.SearchArtist(name, 1, true));
         }
 
         public IActionResult ArtistAlbum(string artistName, string albumName)
@@ -51,9 +41,25 @@ namespace MusicPortal.Controllers
 
         public IActionResult ArtistBiography(string name)
         {
-            Artist artist = _data.SearchArtist(name, 1);
-            artist.SetBiography(_data.GetArtistBiography(name, "content"));
-            return View(artist);
+            return View(_data.SearchArtist(name, 1, false));
+        }
+
+        [HttpPost]
+        public IActionResult PartialArtistTopTracks(string name)
+        {
+            return PartialView("_PartialArtistTopTracks", _data.GetArtistTopTracks(name, 1, 15));
+        }
+
+        [HttpPost]
+        public IActionResult PartialArtistTopAlbums(string name)
+        {
+            return PartialView("_PartialArtistTopAlbums", new Artist(name, _data.GetArtistTopAlbums(name, 1, 12)));
+        }
+
+        [HttpPost]
+        public IActionResult PartialArtistSimilarArtists(string name)
+        {
+            return PartialView("_PartialArtistSimilarArtists", _data.GetSimilarArtists(name, 12));
         }
 
         public IActionResult Error()

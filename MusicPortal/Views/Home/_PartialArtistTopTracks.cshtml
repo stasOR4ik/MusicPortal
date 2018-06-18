@@ -1,4 +1,4 @@
-﻿@using MusicPortal.Models
+﻿@using Core
 @model List<Track>
 @{ 
     int counter = 1;
@@ -11,10 +11,10 @@
        <tr>
            <td>@counter</td>
            <td>
-               <img class="img-circle" src="@track.GetPictureLink()" />
+               <img class="img-circle" src="@track.PictureLink" />
                @track.Name
            </td>
-           <td>@track.GetDuration()</td>
+           <td>@track.Duration</td>
        </tr>
        counter++;
     }

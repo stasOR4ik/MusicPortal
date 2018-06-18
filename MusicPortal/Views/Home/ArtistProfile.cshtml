@@ -1,42 +1,120 @@
-﻿@using MusicPortal.Models
-@model ArtistProfile
+﻿@using Core
+@model Artist
 @{
-    ViewData["Title"] = Model.Artist.Name + " profile";
+    ViewData["Title"] = Model.Name + " profile";
 }
 
-<h1>@Model.Artist.Name profile</h1>
+<h1>@Model.Name profile</h1>
 <div class="row">
     <div class="col-lg-8">
-        <p>@Model.Artist.GetShortBiography()...<a target="_blank" href="/Home/ArtistBiography?name=@Model.Artist.Name">Read more</a></p>
+        <p>@Model.ShortBiography...<a target="_blank" href="/Home/ArtistBiography?name=@Model.Name">Read more</a></p>
     </div>
     <div class="col-lg-4">
-        <img class="img-rounded" src="@Model.Artist.GetPictureLink()" />
+        <img class="img-rounded" src="@Model.PictureLink" />
     </div>
 </div>
 <div class="nav_tabs">
     <div class="row">
         <div class="col-lg-1">
-            <a href="/Home/ArtistProfile?name=@Model.Artist.Name">Tracks</a>
+            <a id="tracks" href="#">Tracks</a>
         </div>
         <div class="col-lg-1">
-            <a href="/Home/ArtistProfile?name=@Model.Artist.Name&tab=1">Albums</a>
+            <a id="albums" href="#">Albums</a>
         </div>
         <div class="col-lg-1">
-            <a href="/Home/ArtistProfile?name=@Model.Artist.Name&tab=2">Similar</a>
+            <a id="similar" href="#">Similar</a>
         </div>
     </div>
 </div>
-@if (Model.Tab == 1)
-{
-    @Html.Partial("_PartialArtistTopAlbums", Model.Artist);
-}
-else if (Model.Tab == 2)
-{
-    @Html.Partial("_PartialArtistSimilarArtists", Model.Artist.SimilarArtists);
-}
-else
-{
-    @Html.Partial("_PartialArtistTopTracks", Model.Artist.Tracks);
-}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/Microsoft.jQuery.Unobtrusive.Ajax/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            beforeSend: function () {
+                $('#gif').css('display', 'block');
+                $('#tabs').empty();
+            },
+            type: 'POST',
+            url: 'PartialArtistTopTracks',
+            data: { name: '@Model.Name' },
+            success: function (responce) {
+                $('#gif').css('display', 'none');
+                $('#tabs').empty();
+                $("#tabs").append(responce);
+            }
+        });
+    });
+    $("#tracks").click(function () {
+        $.ajax({
+            beforeSend: function () {
+                $('#gif').css('display', 'block');
+                $('#tabs').empty();
+            },
+            type: 'POST',
+            url: 'PartialArtistTopTracks',
+            data: { name: '@Model.Name' },
+            success: function (responce) {
+                $('#gif').css('display', 'none');
+                $('#tabs').empty();
+                $("#tabs").append(responce);
+            }
+        });
+    });
+    $("#albums").click(function () {
+        $.ajax({
+            beforeSend: function () {
+                $('#gif').css('display', 'block');
+                $('#tabs').empty();
+            },
+            type: 'POST',
+            url: 'PartialArtistTopAlbums',
+            data: { name: '@Model.Name' },
+            success: function (responce) {
+                $('#gif').css('display', 'none');
+                $('#tabs').empty();
+                $("#tabs").append(responce);
+            }
+        });
+    });
+    $("#similar").click(function () {
+        $.ajax({
+            beforeSend: function () {
+                $('#gif').css('display', 'block');
+                $('#tabs').empty();
+            },
+            type: 'POST',
+            url: 'PartialArtistSimilarArtists',
+            data: { name: '@Model.Name' },
+            success: function (responce) {
+                $('#gif').css('display', 'none');
+                $('#tabs').empty();
+                $("#tabs").append(responce);
+            }
+        });
+    });
+</script>
+<img id="gif" src="~/images/Preloader_8.gif" class="center-block" />
+<div id="tabs">
+    
+</div>
+
+
+
+@*@if (Model.Tab == 1)
+    {
+        @Html.Partial("_PartialArtistTopAlbums", Model);
+    }
+    else if (Model.Tab == 2)
+    {
+        @Html.Partial("_PartialArtistSimilarArtists", Model.Artist.SimilarArtists);
+    }
+    else
+    {
+        @Html.Partial("_PartialArtistTopTracks", Model.Artist.Tracks);
+    }*@
 
 
