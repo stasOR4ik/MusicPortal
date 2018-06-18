@@ -1,0 +1,14 @@
+﻿@using Core
+@model List<Artist>
+@{
+}
+
+@foreach (Artist artist in Model)
+{
+    <a class="pick_out_block" href="/Home/ArtistProfile?name=@artist.Name">
+        <div class="col-lg-2">
+            <img class="img-rounded center-block" src="@artist.PictureLink" />
+            <p class="text-center">@artist.Name</p>
+        </div>
+    </a>
+}
