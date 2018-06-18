@@ -23,10 +23,9 @@ namespace MusicPortal.Controllers
             _data = new LastFMData();
         }
 
-        public IActionResult Index(int page = 1, int numberOfArtistsOnIndex = 12)
+        public IActionResult Index()
         {
-            numberOfArtistsOnStartPage = numberOfArtistsOnIndex;
-            return View(new Index(_data.GetTopArtists(page, numberOfArtistsOnStartPage, 2), page, numberOfArtistsOnStartPage));
+            return View(_data.GetTopArtists(1, 12, 2));
         }
         
         public IActionResult ArtistProfile(string name)
@@ -42,6 +41,18 @@ namespace MusicPortal.Controllers
         public IActionResult ArtistBiography(string name)
         {
             return View(_data.SearchArtist(name, 1, false));
+        }
+
+        [HttpPost]
+        public IActionResult PartialArtistsOnStartPage(int page = 1, int numberArtistsOnStartPage = 12)
+        {
+            return PartialView("_PartialArtistsOnStartPage", _data.GetTopArtists(page, numberArtistsOnStartPage, 2));
+        }
+
+        [HttpPost]
+        public IActionResult PartialPagination(int page = 1, int numberArtistsOnStartPage = 12)
+        {
+            return PartialView("_PartialPagination", new Pagination(page, numberArtistsOnStartPage));
         }
 
         [HttpPost]

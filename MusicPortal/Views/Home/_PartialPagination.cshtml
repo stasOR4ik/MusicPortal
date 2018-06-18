@@ -1,40 +1,73 @@
 ﻿@using MusicPortal.Models
-@model Index
+@model Pagination
 @{ }
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/Microsoft.jQuery.Unobtrusive.Ajax/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script type="text/javascript">
+    function changePage(page, numberOfArtists) {
+        $.ajax({
+            type: 'POST',
+            url: 'Home/PartialArtistsOnStartPage',
+            data: {
+                page: page,
+                numberArtistsOnStartPage: numberOfArtists
+            },
+            success: function (responce) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'Home/PartialPagination',
+                    data: {
+                        page: page,
+                        numberArtistsOnStartPage: numberOfArtists
+                    },
+                    success: function (data) {
+                        $('#newPagination').empty();
+                        $('#newPagination').append(data);
+                    }
+                })
+                $('#top_artists').empty();
+                $('#top_artists').append(responce);
+            }
+        });
+    };
+</script>
 
 <div class="row">
     <div class="col-lg-4 col-lg-offset-2">
         <ul class="pagination">
             @if (Model.Page > 4)
             {
-                <li><a href="/Home/Index?page=@(Model.Page - 4)&numberOfArtistsOnIndex=@Model.NumberOfArtistsOnStartPage">@(Model.Page - 4)</a></li>
+                <li><a href="#" onclick="changePage(@(Model.Page - 4), @Model.NumberOfArtistsOnStartPage)">@(Model.Page - 4)</a></li>
                 <li><a>...</a></li>
             }
             @if (Model.Page > 1)
             {
-                <li><a href="/Home/Index?page=@(Model.Page - 1)&numberOfArtistsOnIndex=@Model.NumberOfArtistsOnStartPage">@(Model.Page - 1)</a></li>
+                <li><a href="#" onclick="changePage(@(Model.Page - 1), @Model.NumberOfArtistsOnStartPage)">@(Model.Page - 1)</a></li>
             }
             <li><a id="taken_property">@Model.Page</a></li>
-            <li><a href="/Home/Index?page=@(Model.Page + 1)&numberOfArtistsOnIndex=@Model.NumberOfArtistsOnStartPage">@(Model.Page + 1)</a></li>
+            <li><a href="#" onclick="changePage(@(Model.Page + 1), @Model.NumberOfArtistsOnStartPage)">@(Model.Page + 1)</a></li>
             <li><a>...</a></li>
-            <li><a href="/Home/Index?page=@(Model.Page + 4)&numberOfArtistsOnIndex=@Model.NumberOfArtistsOnStartPage">@(Model.Page + 4)</a></li>
+            <li><a id="pagination" onclick="changePage(@(Model.Page + 4), @Model.NumberOfArtistsOnStartPage)" href="#">@(Model.Page + 4)</a></li>
         </ul>
     </div>
     <div class="col-lg-4">
         <ul class="pagination">
             @if (Model.NumberOfArtistsOnStartPage > 6)
             {
-                <li><a href="/Home/Index?page=@Model.Page&numberOfArtistsOnIndex=@(Model.NumberOfArtistsOnStartPage - 6)">@(Model.NumberOfArtistsOnStartPage - 6)</a></li>
+                <li><a href="#" onclick="changePage(@(Model.Page), @(Model.NumberOfArtistsOnStartPage - 6))">@(Model.NumberOfArtistsOnStartPage - 6)</a></li>
                 <li><a>...</a></li>
             }
             @if (Model.NumberOfArtistsOnStartPage > 1)
             {
-                <li><a href="/Home/Index?page=@Model.Page&numberOfArtistsOnIndex=@(Model.NumberOfArtistsOnStartPage - 1)">@(Model.NumberOfArtistsOnStartPage - 1)</a></li>
+                <li><a href="#" onclick="changePage(@(Model.Page+4), @(Model.NumberOfArtistsOnStartPage - 1))">@(Model.NumberOfArtistsOnStartPage - 1)</a></li>
             }
             <li><a id="taken_property">@Model.NumberOfArtistsOnStartPage</a></li>
-            <li><a href="/Home/Index?page=@Model.Page&numberOfArtistsOnIndex=@(Model.NumberOfArtistsOnStartPage + 1)">@(Model.NumberOfArtistsOnStartPage + 1)</a></li>
+            <li><a href="#" onclick="changePage(@(Model.Page+4), @(Model.NumberOfArtistsOnStartPage + 1))">@(Model.NumberOfArtistsOnStartPage + 1)</a></li>
             <li><a>...</a></li>
-            <li><a href="/Home/Index?page=@Model.Page&numberOfArtistsOnIndex=@(Model.NumberOfArtistsOnStartPage + 6)">@(Model.NumberOfArtistsOnStartPage + 6)</a></li>
+            <li><a href="#" onclick="changePage(@(Model.Page+4), @(Model.NumberOfArtistsOnStartPage + 6))">@(Model.NumberOfArtistsOnStartPage + 6)</a></li>
         </ul>
     </div>
 </div>
+
