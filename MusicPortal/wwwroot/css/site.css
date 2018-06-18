@@ -69,3 +69,7 @@ h1 {
 input.margin_10px {
     margin:10px;
 }
+
+#gif {
+    display: block;
+}

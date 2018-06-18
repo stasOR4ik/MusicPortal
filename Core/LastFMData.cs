@@ -78,7 +78,7 @@ namespace Core
             }
             else
             {
-                artist.Biography = GetArtistBiography(name, "context");
+                artist.Biography = GetArtistBiography(name, "content");
             }
             artist.SetPictureLink(jsonData.SelectToken("image")[2].SelectToken("#text").ToString());
             return artist;

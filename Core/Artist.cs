@@ -35,6 +35,15 @@ namespace Core
             ShortBiography = shortBiography;
         }
 
+        public Artist(string name, List<Album> albums)
+        {
+            Name = name;
+            Tracks = new List<Track>();
+            Albums = albums;
+            SimilarArtists = new List<Artist>();
+
+        }
+
         public void SetPictureLink(string picturelink)
         {
             string defultPictureLink = "https://lastfm-img2.akamaized.net/i/u/avatar170s/2a96cbd8b46e442fc41c2b86b821562f";

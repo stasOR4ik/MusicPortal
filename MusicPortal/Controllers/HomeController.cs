@@ -26,34 +26,12 @@ namespace MusicPortal.Controllers
         public IActionResult Index(int page = 1, int numberOfArtistsOnIndex = 12)
         {
             numberOfArtistsOnStartPage = numberOfArtistsOnIndex;
-            Index index = new Index(_data.GetTopArtists(page, numberOfArtistsOnStartPage, 2), page, numberOfArtistsOnStartPage);
-            return View(index);
+            return View(new Index(_data.GetTopArtists(page, numberOfArtistsOnStartPage, 2), page, numberOfArtistsOnStartPage));
         }
         
-        public IActionResult ArtistProfile(string name, int tab = 0)
+        public IActionResult ArtistProfile(string name)
         {
-            Artist artist = _data.SearchArtist(name, 1, true);
-            if (tab == 1)
-            {
-                artist.Albums = _data.GetArtistTopAlbums(name, 1, 12);
-            }
-            else if (tab == 2)
-            {
-                //foreach (Artist similarArtist in _data.GetSimilarArtists(name, 12))
-                //{
-                //    _db.Artists.Add(similarArtist);
-                //    _db.SaveChanges();
-                //}
-                //artist.SimilarArtists.SimilarArtists = _data.GetSimilarArtists(name, 12);
-                //_db.Artists.Add(artist);
-                //_db.SaveChanges();
-                artist.SimilarArtists = _data.GetSimilarArtists(name, 12);
-            }
-            else
-            {
-                artist.Tracks = _data.GetArtistTopTracks(name, 1, 15);
-            }
-            return View(new ArtistProfile(artist, tab));
+            return View(_data.SearchArtist(name, 1, true));
         }
 
         public IActionResult ArtistAlbum(string artistName, string albumName)
@@ -63,8 +41,25 @@ namespace MusicPortal.Controllers
 
         public IActionResult ArtistBiography(string name)
         {
-            Artist artist = _data.SearchArtist(name, 1, false);
-            return View(artist);
+            return View(_data.SearchArtist(name, 1, false));
+        }
+
+        [HttpPost]
+        public IActionResult PartialArtistTopTracks(string name)
+        {
+            return PartialView("_PartialArtistTopTracks", _data.GetArtistTopTracks(name, 1, 15));
+        }
+
+        [HttpPost]
+        public IActionResult PartialArtistTopAlbums(string name)
+        {
+            return PartialView("_PartialArtistTopAlbums", new Artist(name, _data.GetArtistTopAlbums(name, 1, 12)));
+        }
+
+        [HttpPost]
+        public IActionResult PartialArtistSimilarArtists(string name)
+        {
+            return PartialView("_PartialArtistSimilarArtists", _data.GetSimilarArtists(name, 12));
         }
 
         public IActionResult Error()
