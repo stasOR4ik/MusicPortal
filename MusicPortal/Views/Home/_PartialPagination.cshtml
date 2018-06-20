@@ -29,6 +29,7 @@
                 })
                 $('#top_artists').empty();
                 $('#top_artists').append(responce);
+                window.location.hash = "?page=" + page + "&artists=" + numberOfArtists;
             }
         });
     };
