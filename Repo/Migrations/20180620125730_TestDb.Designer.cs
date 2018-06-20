@@ -11,9 +11,10 @@ using System;
 namespace Repo.Migrations
 {
     [DbContext(typeof(MusicContext))]
-    partial class MusicContextModelSnapshot : ModelSnapshot
+    [Migration("20180620125730_TestDb")]
+    partial class TestDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,24 +59,6 @@ namespace Repo.Migrations
                     b.ToTable("Artists");
                 });
 
-            modelBuilder.Entity("Core.ArtistSimilarArtist", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("ArtistId");
-
-                    b.Property<int?>("SimilarArtistId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArtistId");
-
-                    b.HasIndex("SimilarArtistId");
-
-                    b.ToTable("SimilarArtists");
-                });
-
             modelBuilder.Entity("Core.Track", b =>
                 {
                     b.Property<int>("Id")
@@ -105,17 +88,6 @@ namespace Repo.Migrations
                     b.HasOne("Core.Artist", "Artist")
                         .WithMany("Albums")
                         .HasForeignKey("ArtistId");
-                });
-
-            modelBuilder.Entity("Core.ArtistSimilarArtist", b =>
-                {
-                    b.HasOne("Core.Artist", "Artist")
-                        .WithMany("SimilarArtists")
-                        .HasForeignKey("ArtistId");
-
-                    b.HasOne("Core.Artist", "SimilarArtist")
-                        .WithMany()
-                        .HasForeignKey("SimilarArtistId");
                 });
 
             modelBuilder.Entity("Core.Track", b =>

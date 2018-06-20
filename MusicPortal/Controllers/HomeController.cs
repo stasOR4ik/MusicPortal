@@ -15,7 +15,6 @@ namespace MusicPortal.Controllers
     {
         MusicContext _db;
         LastFMData _data;
-        int numberOfArtistsOnStartPage = 12;
 
         public HomeController(MusicContext musicContext)
         {

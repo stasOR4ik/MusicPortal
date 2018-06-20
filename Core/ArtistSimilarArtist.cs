@@ -8,22 +8,22 @@ namespace Core
 {
     public class ArtistSimilarArtist
     {
-        public int ArtistId { get; set; }
+        public int  Id { get; set; }
+        
         public Artist Artist { get; set; }
 
-        public int SimilarArtistId { get; set; }
-        public List<Artist> SimilarArtists { get; set; }
+        public Artist SimilarArtist { get; set; }
 
         public ArtistSimilarArtist()
         {
             Artist = new Artist();
-            SimilarArtists = new List<Artist>();
+            SimilarArtist = new Artist();
         }
 
-        public ArtistSimilarArtist(Artist artists, List<Artist> similarArtists)
+        public ArtistSimilarArtist(Artist artists, Artist similarArtists)
         {
             Artist = artists;
-            SimilarArtists = similarArtists;
+            SimilarArtist = similarArtists;
         }
     }
 }

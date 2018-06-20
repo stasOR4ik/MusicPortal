@@ -138,6 +138,10 @@
     <Compile Include="Migrations\20180613140132_Fix problem with SimilarArtist.designer.cs">
       <DependentUpon>20180613140132_Fix problem with SimilarArtist.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20180620133358_TestDb.cs" />
+    <Compile Include="Migrations\20180620133358_TestDb.designer.cs">
+      <DependentUpon>20180620133358_TestDb.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MusicContextModelSnapshot.cs" />
     <Compile Include="MusicContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

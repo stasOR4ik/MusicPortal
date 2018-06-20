@@ -14,7 +14,7 @@ namespace Core
         public string ShortBiography { get; set; }
         public List<Track> Tracks { get; set; }
         public List<Album> Albums { get; set; }
-        public List<Artist> SimilarArtists { get; set; }
+        public List<ArtistSimilarArtist> SimilarArtists { get; set; }
 
         public Artist() { }
 
@@ -23,7 +23,7 @@ namespace Core
             Name = name;
             Tracks = new List<Track>();
             Albums = new List<Album>();
-            SimilarArtists = new List<Artist>();
+            SimilarArtists = new List<ArtistSimilarArtist>();
         }
 
         public Artist(string name, string shortBiography)
@@ -31,7 +31,7 @@ namespace Core
             Name = name;
             Tracks = new List<Track>();
             Albums = new List<Album>();
-            SimilarArtists = new List<Artist>();
+            SimilarArtists = new List<ArtistSimilarArtist>();
             ShortBiography = shortBiography;
         }
 
@@ -40,7 +40,7 @@ namespace Core
             Name = name;
             Tracks = new List<Track>();
             Albums = albums;
-            SimilarArtists = new List<Artist>();
+            SimilarArtists = new List<ArtistSimilarArtist>();
 
         }
 

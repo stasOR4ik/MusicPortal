@@ -45,9 +45,9 @@
   <ItemGroup>
     <Compile Include="Album.cs" />
     <Compile Include="Artist.cs" />
+    <Compile Include="ArtistSimilarArtist.cs" />
     <Compile Include="LastFMData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ArtistSimilarArtists.cs" />
     <Compile Include="Track.cs" />
   </ItemGroup>
   <ItemGroup>

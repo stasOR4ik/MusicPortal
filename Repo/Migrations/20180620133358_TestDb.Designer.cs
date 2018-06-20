@@ -11,9 +11,10 @@ using System;
 namespace Repo.Migrations
 {
     [DbContext(typeof(MusicContext))]
-    partial class MusicContextModelSnapshot : ModelSnapshot
+    [Migration("20180620133358_TestDb")]
+    partial class TestDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

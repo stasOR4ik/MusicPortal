@@ -13,22 +13,19 @@ namespace Repo
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Track> Tracks { get; set; }
         public DbSet<Album> Albums { get; set; }
+        public DbSet<ArtistSimilarArtist> SimilarArtists { get; set; }
+
         public MusicContext(DbContextOptions<MusicContext> options)
             : base(options)
         {
             Database.EnsureCreated();
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-
-        //    //modelBuilder.Entity<ArtistSimilarArtists>()
-        //    //    .HasKey(p => p.Id);
-
-        //    //modelBuilder.Entity<ArtistSimilarArtists>()
-        //    //    .HasMany(p => p.SimilarArtists)
-        //    //    .WithOne(t => t.SimilarArtists)
-        //    //    .HasForeignKey(k => k.Id);
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ArtistSimilarArtist>()
+                .HasOne(p => p.Artist)
+                .WithMany(p => p.SimilarArtists);
+        }
     }
 }
