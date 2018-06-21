@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repo
 {
-    class MusicRepository<T> : IRepository<T>
+    public class MusicRepository<T> : IRepository<T>
         where T : class
     {
         MusicContext _context;
@@ -44,7 +44,7 @@ namespace Repo
 
         public T GetBy(Expression<Func<T, bool>> predicate)
         {
-            return _db.Find(predicate);
+            return _db.FirstOrDefault(predicate);
         }
 
         public void Save()
@@ -57,5 +57,4 @@ namespace Repo
             _db.Update(item);
         }
     }
-}
 }

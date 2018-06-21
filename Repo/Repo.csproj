@@ -122,7 +122,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlbumRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Migrations\20180613092631_Adding Database.cs" />
     <Compile Include="Migrations\20180613092631_Adding Database.designer.cs">
@@ -144,11 +143,14 @@
     <Compile Include="Migrations\20180620133358_TestDb.designer.cs">
       <DependentUpon>20180620133358_TestDb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20180621130017_Adding Artist and Track fields to Track.cs" />
+    <Compile Include="Migrations\20180621130017_Adding Artist and Track fields to Track.designer.cs">
+      <DependentUpon>20180621130017_Adding Artist and Track fields to Track.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MusicContextModelSnapshot.cs" />
     <Compile Include="MusicContext.cs" />
     <Compile Include="MusicRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TrackRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

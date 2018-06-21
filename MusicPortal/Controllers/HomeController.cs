@@ -8,28 +8,27 @@ using Microsoft.AspNetCore.Mvc;
 using MusicPortal.Models;
 using Newtonsoft.Json;
 using Repo;
+using Service;
 
 namespace MusicPortal.Controllers
 {
     public class HomeController : Controller
     {
-        MusicContext _db;
-        LastFMData _data;
+        DataElector _data;
 
         public HomeController(MusicContext musicContext)
         {
-            _db = musicContext;
-            _data = new LastFMData();
+            _data = new DataElector(musicContext);
         }
 
         public IActionResult Index()
         {
-            return View(_data.GetTopArtists(1, 12, 2));
+            return View(_data.GetTopArtists(1, 12));
         }
         
         public IActionResult ArtistProfile(string name)
         {
-            return View(_data.SearchArtist(name, 1, true));
+            return View(_data.SearchArtist(name, true));
         }
 
         public IActionResult ArtistAlbum(string artistName, string albumName)
@@ -39,13 +38,13 @@ namespace MusicPortal.Controllers
 
         public IActionResult ArtistBiography(string name)
         {
-            return View(_data.SearchArtist(name, 1, false));
+            return View(_data.SearchArtist(name, false));
         }
 
         [HttpPost]
         public IActionResult PartialArtistsOnStartPage(int page = 1, int numberArtistsOnStartPage = 12)
         {
-            return PartialView("_PartialArtistsOnStartPage", _data.GetTopArtists(page, numberArtistsOnStartPage, 2));
+            return PartialView("_PartialArtistsOnStartPage", _data.GetTopArtists(page, numberArtistsOnStartPage));
         }
 
         [HttpPost]
@@ -57,7 +56,7 @@ namespace MusicPortal.Controllers
         [HttpPost]
         public IActionResult PartialArtistTopTracks(string name)
         {
-            return PartialView("_PartialArtistTopTracks", _data.GetArtistTopTracks(name, 1, 15));
+            return PartialView("_PartialArtistTopTracks",_data.GetArtistTopTracks(name, 1, 15));
         }
 
         [HttpPost]
