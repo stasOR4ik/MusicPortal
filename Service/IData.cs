@@ -17,7 +17,7 @@ namespace Service
 
         List<Artist> GetSimilarArtists(string name, int limit);
 
-        Artist SearchArtist(string name, bool isShorBiography);
+        Artist SearchArtist(string name);
 
         Album GetArtistAlbum(string artistName, string albumName);
     }

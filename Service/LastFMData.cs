@@ -90,20 +90,25 @@ namespace Service
             return artists;
         }
 
-        public Artist SearchArtist(string name, bool isShorBiography)
+        public Artist SearchArtist(string name)
         {
             string artistUrl = commonUrl + "method=artist.search&limit=1&artist=" + name;
             JToken jsonData = TakeJObjectFromLastFM(artistUrl).SelectToken("results").SelectToken("artistmatches").SelectToken("artist")[0];
-            Artist artist = new Artist(jsonData.SelectToken("name").ToString());
-            if(isShorBiography)
+            Artist searchArtist = _artistsDb.GetBy(p => p.Name == name);
+            Artist artist = searchArtist != null ? searchArtist : new Artist(jsonData.SelectToken("name").ToString());
+            (string, string) biographies = GetArtistBiographies(name);
+            artist.ShortBiography = biographies.Item1;
+            artist.Biography = biographies.Item2;
+            artist.SetPictureLink(jsonData.SelectToken("image")[2].SelectToken("#text").ToString());
+            if (searchArtist == null)
             {
-                artist.ShortBiography = GetArtistBiography(name, "summary");
+                _artistsDb.Create(artist);
             }
             else
             {
-                artist.Biography = GetArtistBiography(name, "content");
+                _artistsDb.Update(artist);
             }
-            artist.SetPictureLink(jsonData.SelectToken("image")[2].SelectToken("#text").ToString());
+            _artistsDb.Save();
             return artist;
         }
 
@@ -113,7 +118,7 @@ namespace Service
             JObject jsonData = TakeJObjectFromLastFM(albumUrl);
             Album album = new Album(albumName);
             album.SetPictureLink(jsonData.SelectToken("album")["image"][3].SelectToken("#text").ToString());
-            album.Artist = SearchArtist(artistName, true);
+            album.Artist = SearchArtist(artistName);
             foreach (JToken song in jsonData.SelectToken("album").SelectToken("tracks")["track"])
             {
                 Track track = new Track(song.SelectToken("name").ToString());
@@ -145,11 +150,13 @@ namespace Service
             return jsonData.SelectToken("album")?.SelectToken("image")?[2]?.SelectToken("#text")?.ToString() ?? "";
         }
 
-        public string GetArtistBiography(string artistName, string biographySize)   // biographySize = {"summary", "content"}
+        public (string, string) GetArtistBiographies(string artistName)
         {
             string artistUrl = commonUrl + "method=artist.getinfo&" + "artist=" + artistName;
-            string biography = TakeJObjectFromLastFM(artistUrl).SelectToken("artist")["bio"].SelectToken(biographySize).ToString();
-            return ParsingBiography(biography);
+            JObject jsonBiography = TakeJObjectFromLastFM(artistUrl);
+            string shortBiography = jsonBiography.SelectToken("artist")["bio"].SelectToken("summary").ToString();
+            string biography = jsonBiography.SelectToken("artist")["bio"].SelectToken("content").ToString();
+            return (ParsingBiography(shortBiography), ParsingBiography(biography));
         }
 
         public string ParsingBiography(string biography)

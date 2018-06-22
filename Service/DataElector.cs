@@ -43,10 +43,10 @@ namespace Service
             return artists.Count == 0 ? _lastFMData.GetSimilarArtists(name, limit) : artists;
         }
 
-        public Artist SearchArtist(string name, bool isShorBiography)
+        public Artist SearchArtist(string name)
         {
-            Artist artist = _musicDbData.SearchArtist(name, isShorBiography);
-            return artist == null ? _lastFMData.SearchArtist(name, isShorBiography) : artist;
+            Artist artist = _musicDbData.SearchArtist(name);
+            return artist?.ShortBiography == null ? _lastFMData.SearchArtist(name) : artist;
         }
 
         public Album GetArtistAlbum(string artistName, string albumName)

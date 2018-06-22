@@ -16,10 +16,7 @@ namespace Core
 
         public Track() { }
 
-        public Track(string name)
-        {
-            Name = name;
-        }
+        public Track(string name) => Name = name;
 
         public void SetPictureLink(string pictureLink)
         {

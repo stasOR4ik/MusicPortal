@@ -23,10 +23,7 @@ namespace Service
             _tracksDb = new MusicRepository<Track>(_context);
         }
 
-        public List<Artist> GetTopArtists(int page, int limit)
-        {
-            return _artistsDb.GetAllBy(p => p.Id > (page - 1) * limit && p.Id <= page * limit).ToList();
-        }
+        public List<Artist> GetTopArtists(int page, int limit) => _artistsDb.GetAllBy(p => p.Id > (page - 1) * limit && p.Id <= page * limit).ToList();
 
         public List<Track> GetArtistTopTracks(string name, int page, int limit)
         {
@@ -36,10 +33,7 @@ namespace Service
             return artist.Tracks;
         }
 
-        public List<Album> GetArtistTopAlbums(string name, int page, int limit)
-        {
-            return _artistsDb.GetBy(p => p.Name == name).Albums;
-        }
+        public List<Album> GetArtistTopAlbums(string name, int page, int limit) => _artistsDb.GetBy(p => p.Name == name).Albums;
 
         public List<Artist> GetSimilarArtists(string name, int limit)
         {
@@ -51,19 +45,10 @@ namespace Service
             return similarArtists;
         }
 
-        public Artist SearchArtist(string name, bool isShorBiography)
-        {
-            return GetArtistByName(name);
-        }
+        public Artist SearchArtist(string name) => GetArtistByName(name);
 
-        public Album GetArtistAlbum(string artistName, string albumName)
-        {
-            return GetArtistByName(artistName).Albums.FirstOrDefault(p => p.Name == albumName);
-        }
+        public Album GetArtistAlbum(string artistName, string albumName) => GetArtistByName(artistName).Albums.FirstOrDefault(p => p.Name == albumName);
 
-        Artist GetArtistByName(string name)
-        {
-            return _artistsDb.GetBy(p => p.Name == name);
-        }
+        Artist GetArtistByName(string name) => _artistsDb.GetBy(p => p.Name == name);
     }
 }

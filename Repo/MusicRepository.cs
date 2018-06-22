@@ -20,20 +20,11 @@ namespace Repo
             _db = context.Set<T>();
         }
 
-        public IEnumerable<T> GetAll()
-        {
-            return _db;
-        }
+        public IEnumerable<T> GetAll() => _db;
 
-        public IEnumerable<T> GetAllBy(Expression<Func<T, bool>> predicate)
-        {
-            return _db.Where(predicate);
-        }
+        public IEnumerable<T> GetAllBy(Expression<Func<T, bool>> predicate) => _db.Where(predicate);
 
-        public void Create(T item)
-        {
-            _db.Add(item);
-        }
+        public void Create(T item) => _db.Add(item);
 
         public void Delete(Expression<Func<T, bool>> predicate)
         {
@@ -42,19 +33,10 @@ namespace Repo
                 _db.Remove(item);
         }
 
-        public T GetBy(Expression<Func<T, bool>> predicate)
-        {
-            return _db.FirstOrDefault(predicate);
-        }
+        public T GetBy(Expression<Func<T, bool>> predicate) => _db.FirstOrDefault(predicate);
 
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
+        public void Save() => _context.SaveChanges();
 
-        public void Update(T item)
-        {
-            _db.Update(item);
-        }
+        public void Update(T item) => _db.Update(item);
     }
 }

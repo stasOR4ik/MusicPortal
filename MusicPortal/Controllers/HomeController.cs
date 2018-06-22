@@ -28,7 +28,7 @@ namespace MusicPortal.Controllers
         
         public IActionResult ArtistProfile(string name)
         {
-            return View(_data.SearchArtist(name, true));
+            return View(_data.SearchArtist(name));
         }
 
         public IActionResult ArtistAlbum(string artistName, string albumName)
@@ -38,7 +38,7 @@ namespace MusicPortal.Controllers
 
         public IActionResult ArtistBiography(string name)
         {
-            return View(_data.SearchArtist(name, false));
+            return View(_data.SearchArtist(name));
         }
 
         [HttpPost]
