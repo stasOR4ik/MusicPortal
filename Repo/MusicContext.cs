@@ -1,5 +1,6 @@
 ﻿using Core;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Repo
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ArtistSimilarArtist>()
-                .HasOne(p => p.Artist)
+                .HasOne(p => p.SimilarArtist)
                 .WithMany(p => p.SimilarArtists);
         }
     }

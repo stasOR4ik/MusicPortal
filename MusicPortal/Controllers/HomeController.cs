@@ -56,7 +56,7 @@ namespace MusicPortal.Controllers
         [HttpPost]
         public IActionResult PartialArtistTopTracks(string name)
         {
-            return PartialView("_PartialArtistTopTracks",_data.GetArtistTopTracks(name, 1, 15));
+            return PartialView("_PartialArtistTopTracks", _data.GetArtistTopTracks(name, 1, 15));
         }
 
         [HttpPost]

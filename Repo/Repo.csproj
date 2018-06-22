@@ -147,6 +147,14 @@
     <Compile Include="Migrations\20180621130017_Adding Artist and Track fields to Track.designer.cs">
       <DependentUpon>20180621130017_Adding Artist and Track fields to Track.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20180622110136_Fix ArtistSimilarArtist problem.cs" />
+    <Compile Include="Migrations\20180622110136_Fix ArtistSimilarArtist problem.designer.cs">
+      <DependentUpon>20180622110136_Fix ArtistSimilarArtist problem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20180622112307_Fix again.cs" />
+    <Compile Include="Migrations\20180622112307_Fix again.designer.cs">
+      <DependentUpon>20180622112307_Fix again.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MusicContextModelSnapshot.cs" />
     <Compile Include="MusicContext.cs" />
     <Compile Include="MusicRepository.cs" />

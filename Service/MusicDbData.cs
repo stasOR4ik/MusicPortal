@@ -2,8 +2,10 @@
 using Repo;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace Service
@@ -25,29 +27,29 @@ namespace Service
 
         public List<Artist> GetTopArtists(int page, int limit) => _artistsDb.GetAllBy(p => p.Id > (page - 1) * limit && p.Id <= page * limit).ToList();
 
-        public List<Track> GetArtistTopTracks(string name, int page, int limit)
-        {
-            Artist artist = _artistsDb.GetBy(p => p.Name == name);
-            artist.Tracks = _tracksDb.GetAllBy(p => p.Artist.Id == artist.Id).ToList();
-            _artistsDb.Save();
-            return artist.Tracks;
-        }
+        public List<Track> GetArtistTopTracks(string name, int page, int limit) => _tracksDb.GetAllBy(p => p.Artist.Id == GetArtistByName(name).Id).ToList();
 
-        public List<Album> GetArtistTopAlbums(string name, int page, int limit) => _artistsDb.GetBy(p => p.Name == name).Albums;
+        public List<Album> GetArtistTopAlbums(string name, int page, int limit) => _albumsDb.GetAllBy(p => p.Artist.Id == GetArtistByName(name).Id).ToList();
 
         public List<Artist> GetSimilarArtists(string name, int limit)
         {
-            List<Artist> similarArtists = new List<Artist>();
-            foreach(ArtistSimilarArtist similarArtist in GetArtistByName(name).SimilarArtists)
+            List<Artist> artists = new List<Artist>();
+            List<ArtistSimilarArtist> similarArtists = _context.SimilarArtists.Include("SimilarArtist").Where(p => p.Artist == GetArtistByName(name)).ToList();
+            foreach (ArtistSimilarArtist similarArtist in similarArtists)
             {
-                similarArtists.Add(similarArtist.SimilarArtist);
+                artists.Add(similarArtist.SimilarArtist);
             }
-            return similarArtists;
+            return artists;
         }
 
         public Artist SearchArtist(string name) => GetArtistByName(name);
 
-        public Album GetArtistAlbum(string artistName, string albumName) => GetArtistByName(artistName).Albums.FirstOrDefault(p => p.Name == albumName);
+        public Album GetArtistAlbum(string artistName, string albumName)
+        {
+            Album album = _albumsDb.GetBy(p => p.Name == albumName);
+            album.Tracks = _tracksDb.GetAllBy(p => p.Album == album).ToList();
+            return album.Tracks == null || album.Artist == null ? null : album;
+        }
 
         Artist GetArtistByName(string name) => _artistsDb.GetBy(p => p.Name == name);
     }
