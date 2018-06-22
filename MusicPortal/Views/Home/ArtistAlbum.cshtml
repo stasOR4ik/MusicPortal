@@ -8,8 +8,8 @@
 <h1><a href="/Home/ArtistProfile?name=@Model.Artist.Name">@Model.Artist.Name</a></h1>
 <h1>@Model.Name</h1>
 <div class="row">
-    <div class="col-lg-4">
-        <img class="img-rounded" src="@Model.GetPictureLink()" />
+    <div class="col-lg-3">
+        <img class="img-rounded" src="@Model.PictureLink" />
     </div>
     <div class="col-lg-8">
         @if (Model.Tracks.Count != 0)
@@ -21,10 +21,10 @@
                     <tr>
                         <td>@counter</td>
                         <td>
-                            <img class="img-circle" src="@track.GetPictureLink()" />
+                            <img class="img-circle" src="@track.PictureLink" />
                             @track.Name
                         </td>
-                        <td>@track.GetDuration()</td>
+                        <td>@track.Duration</td>
                     </tr>
                     counter++;
                 }

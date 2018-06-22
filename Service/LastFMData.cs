@@ -5,25 +5,43 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Core;
+using Repo;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Core
+namespace Service
 {
-    public class LastFMData
+    public class LastFMData : IData
     {
         private string commonUrl = "http://ws.audioscrobbler.com/2.0/?api_key=6406cb88807bffe5b2492343145f8451&format=json&";
+        private MusicContext _context;
+        private MusicRepository<Artist> _artistsDb;
+        private MusicRepository<Album> _albumsDb;
+        private MusicRepository<Track> _tracksDb;
 
-        public List<Artist> GetTopArtists(int page, int limit, int imageSize)
+        public LastFMData(MusicContext context)
+        {
+            _context = context;
+            _albumsDb = new MusicRepository<Album>(_context);
+            _artistsDb = new MusicRepository<Artist>(_context);
+            _tracksDb = new MusicRepository<Track>(_context);
+        }
+
+        public List<Artist> GetTopArtists(int page, int limit)
         {
             string artistsUrl = commonUrl + "method=chart.gettopartists&page=" + page + "&limit=" + limit;
             List<Artist> artists = new List<Artist>();
             foreach (JToken singer in TakeJObjectFromLastFM(artistsUrl)["artists"]["artist"])
             {
-                Artist artist = new Artist(singer.SelectToken("name").ToString());
-                artist.SetPictureLink(singer["image"][imageSize].SelectToken("#text").ToString());
+                string artistName = singer.SelectToken("name").ToString();
+                Artist artist = new Artist(artistName);
+                artist.SetPictureLink(singer["image"][2].SelectToken("#text").ToString());
+                _artistsDb.Create(artist);
+                _artistsDb.Save();
                 artists.Add(artist);
             }
+            
             return artists;
         }
 
@@ -31,19 +49,25 @@ namespace Core
         {
             string tracksUrl = commonUrl + "method=artist.gettoptracks&page=" + page + "&limit=" + limit + "&artist=" + name;
             List<Track> tracks = new List<Track>();
+            Artist artist = _artistsDb.GetBy(p => p.Name == name);
             foreach (JToken song in TakeJObjectFromLastFM(tracksUrl).SelectToken("toptracks")["track"])
             {
-                Track track = new Track(song.SelectToken("name").ToString());
+                string trackName = song.SelectToken("name").ToString();
+                Track track = new Track(trackName);
                 track.SetPictureLink(GetTrackImage(name, track.Name));
                 track.SetDurationInMilliseconds(GetTrackDurationInMilliseconds(name, track.Name));
                 tracks.Add(track);
             }
+            artist.Tracks = tracks;
+            _artistsDb.Update(artist);
+            _artistsDb.Save();
             return tracks;
         }
 
         public List<Album> GetArtistTopAlbums(string name, int page, int limit)
         {
             string albumsUrl = commonUrl + "method=artist.gettopalbums&page=" + page + "&limit=" + limit + "&artist=" + name;
+            Artist artist = _artistsDb.GetBy(p => p.Name == name);
             List<Album> albums = new List<Album>();
             foreach (JToken _album in TakeJObjectFromLastFM(albumsUrl).SelectToken("topalbums")["album"])
             {
@@ -51,36 +75,57 @@ namespace Core
                 album.SetPictureLink(GetAlbumImage(name, album.Name));
                 albums.Add(album);
             }
+            artist.Albums = albums;
+            _artistsDb.Update(artist);
+            _artistsDb.Save();
             return albums;
         }
 
         public List<Artist> GetSimilarArtists(string name, int limit)
         {
             string artistsUrl = commonUrl + "method=artist.getsimilar&limit=" + limit + "&artist=" + name;
+            Artist artist = _artistsDb.GetBy(p => p.Name == name);
+            artist.SimilarArtists = new List<ArtistSimilarArtist>();
             List<Artist> artists = new List<Artist>();
             foreach (JToken singer in TakeJObjectFromLastFM(artistsUrl).SelectToken("similarartists")["artist"])
             {
-                Artist artist = new Artist(singer.SelectToken("name").ToString());
-                artist.SetPictureLink(singer["image"][2].SelectToken("#text").ToString());
-                artists.Add(artist);
+                string artistName = singer.SelectToken("name").ToString();
+                Artist similarArtist = _artistsDb.GetBy(p => p.Name == artistName);
+                if (similarArtist == null)
+                {
+                    similarArtist = new Artist(singer.SelectToken("name").ToString());
+                    similarArtist.SetPictureLink(singer["image"][2].SelectToken("#text").ToString());
+                    _artistsDb.Create(similarArtist);
+                    _artistsDb.Save();
+                }
+                _context.SimilarArtists.Add(new ArtistSimilarArtist(artist, similarArtist));
+                _context.SaveChanges();
+                artists.Add(similarArtist);
             }
+            _artistsDb.Update(artist);
+            _artistsDb.Save();
             return artists;
         }
 
-        public Artist SearchArtist(string name, int limit, bool isShorBiography)
+        public Artist SearchArtist(string name)
         {
-            string artistUrl = commonUrl + "method=artist.search&limit=" + limit + "&artist=" + name;
+            string artistUrl = commonUrl + "method=artist.search&limit=1&artist=" + name;
             JToken jsonData = TakeJObjectFromLastFM(artistUrl).SelectToken("results").SelectToken("artistmatches").SelectToken("artist")[0];
-            Artist artist = new Artist(jsonData.SelectToken("name").ToString());
-            if(isShorBiography)
+            Artist searchArtist = _artistsDb.GetBy(p => p.Name == name);
+            Artist artist = searchArtist != null ? searchArtist : new Artist(jsonData.SelectToken("name").ToString());
+            (string, string) biographies = GetArtistBiographies(name);
+            artist.ShortBiography = biographies.Item1;
+            artist.Biography = biographies.Item2;
+            artist.SetPictureLink(jsonData.SelectToken("image")[2].SelectToken("#text").ToString());
+            if (searchArtist == null)
             {
-                artist.ShortBiography = GetArtistBiography(name, "summary");
+                _artistsDb.Create(artist);
             }
             else
             {
-                artist.Biography = GetArtistBiography(name, "content");
+                _artistsDb.Update(artist);
             }
-            artist.SetPictureLink(jsonData.SelectToken("image")[2].SelectToken("#text").ToString());
+            _artistsDb.Save();
             return artist;
         }
 
@@ -88,15 +133,28 @@ namespace Core
         {
             string albumUrl = commonUrl + "method=album.getinfo&artist=" + artistName + "&album=" + albumName;
             JObject jsonData = TakeJObjectFromLastFM(albumUrl);
-            Album album = new Album(albumName);
-            album.SetPictureLink(jsonData.SelectToken("album")["image"][3].SelectToken("#text").ToString());
-            album.Artist = SearchArtist(artistName, 1, true);
+            Artist artist = _artistsDb.GetBy(p => p.Name == artistName);
+            Album album = _albumsDb.GetBy(p => p.Name == albumName);
             foreach (JToken song in jsonData.SelectToken("album").SelectToken("tracks")["track"])
             {
-                Track track = new Track(song.SelectToken("name").ToString());
-                track.SetPictureLink(jsonData.SelectToken("album")["image"][0].SelectToken("#text").ToString());
-                track.SetDurationInMilliseconds(GetTrackDurationInMilliseconds(artistName, track.Name));
-                album.Tracks.Add(track);
+                string trackName = song.SelectToken("name").ToString();
+                Track track = _tracksDb.GetBy(p => p.Name == trackName);
+                if (track == null)
+                {
+                    track = new Track(trackName);
+                    track.SetPictureLink(jsonData.SelectToken("album")["image"][0].SelectToken("#text").ToString());
+                    track.SetDurationInMilliseconds(GetTrackDurationInMilliseconds(artistName, track.Name));
+                    track.Artist = artist;
+                    track.Album = album;
+                    _tracksDb.Create(track);
+                }
+                else
+                {
+                    track.Album = album;
+                    _tracksDb.Update(track);
+                }
+                _tracksDb.Save();
+                //album.Tracks.Add(track);
             }
             return album;
         }
@@ -122,11 +180,13 @@ namespace Core
             return jsonData.SelectToken("album")?.SelectToken("image")?[2]?.SelectToken("#text")?.ToString() ?? "";
         }
 
-        public string GetArtistBiography(string artistName, string biographySize)   // biographySize = {"summary", "content"}
+        public (string, string) GetArtistBiographies(string artistName)
         {
             string artistUrl = commonUrl + "method=artist.getinfo&" + "artist=" + artistName;
-            string biography = TakeJObjectFromLastFM(artistUrl).SelectToken("artist")["bio"].SelectToken(biographySize).ToString();
-            return ParsingBiography(biography);
+            JObject jsonBiography = TakeJObjectFromLastFM(artistUrl);
+            string shortBiography = jsonBiography.SelectToken("artist")["bio"].SelectToken("summary").ToString();
+            string biography = jsonBiography.SelectToken("artist")["bio"].SelectToken("content").ToString();
+            return (ParsingBiography(shortBiography), ParsingBiography(biography));
         }
 
         public string ParsingBiography(string biography)

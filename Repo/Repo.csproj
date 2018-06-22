@@ -122,6 +122,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IRepository.cs" />
     <Compile Include="Migrations\20180613092631_Adding Database.cs" />
     <Compile Include="Migrations\20180613092631_Adding Database.designer.cs">
       <DependentUpon>20180613092631_Adding Database.cs</DependentUpon>
@@ -138,8 +139,25 @@
     <Compile Include="Migrations\20180613140132_Fix problem with SimilarArtist.designer.cs">
       <DependentUpon>20180613140132_Fix problem with SimilarArtist.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20180620133358_TestDb.cs" />
+    <Compile Include="Migrations\20180620133358_TestDb.designer.cs">
+      <DependentUpon>20180620133358_TestDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20180621130017_Adding Artist and Track fields to Track.cs" />
+    <Compile Include="Migrations\20180621130017_Adding Artist and Track fields to Track.designer.cs">
+      <DependentUpon>20180621130017_Adding Artist and Track fields to Track.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20180622110136_Fix ArtistSimilarArtist problem.cs" />
+    <Compile Include="Migrations\20180622110136_Fix ArtistSimilarArtist problem.designer.cs">
+      <DependentUpon>20180622110136_Fix ArtistSimilarArtist problem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20180622112307_Fix again.cs" />
+    <Compile Include="Migrations\20180622112307_Fix again.designer.cs">
+      <DependentUpon>20180622112307_Fix again.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\MusicContextModelSnapshot.cs" />
     <Compile Include="MusicContext.cs" />
+    <Compile Include="MusicRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
