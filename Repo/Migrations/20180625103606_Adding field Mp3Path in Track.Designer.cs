@@ -11,9 +11,10 @@ using System;
 namespace Repo.Migrations
 {
     [DbContext(typeof(MusicContext))]
-    partial class MusicContextModelSnapshot : ModelSnapshot
+    [Migration("20180625103606_Adding field Mp3Path in Track")]
+    partial class AddingfieldMp3PathinTrack
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,11 +113,11 @@ namespace Repo.Migrations
             modelBuilder.Entity("Core.ArtistSimilarArtist", b =>
                 {
                     b.HasOne("Core.Artist", "Artist")
-                        .WithMany("SimilarArtists")
+                        .WithMany()
                         .HasForeignKey("ArtistId");
 
                     b.HasOne("Core.Artist", "SimilarArtist")
-                        .WithMany()
+                        .WithMany("SimilarArtists")
                         .HasForeignKey("SimilarArtistId");
                 });
 

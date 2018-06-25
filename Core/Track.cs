@@ -11,6 +11,7 @@ namespace Core
         public string Name { get; set; }
         public string PictureLink { get; set; }
         public string Duration { get; set; }
+        public string Mp3Path { get; set; }
         public Artist Artist { get; set; }
         public Album Album { get; set; }
 
