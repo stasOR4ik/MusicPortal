@@ -28,7 +28,8 @@ namespace MusicPortal.Controllers
         
         public IActionResult ArtistProfile(string name)
         {
-            return View(_data.SearchArtist(name));
+            Artist artist = _data.SearchArtist(name);
+            return artist == null ? View("ErrorMessage", "This artist doesn't exist.") : View(artist);
         }
 
         public IActionResult ArtistAlbum(string artistName, string albumName)

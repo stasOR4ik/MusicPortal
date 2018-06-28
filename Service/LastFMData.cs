@@ -110,23 +110,28 @@ namespace Service
         public Artist SearchArtist(string name)
         {
             string artistUrl = commonUrl + "method=artist.search&limit=1&artist=" + name;
-            JToken jsonData = TakeJObjectFromLastFM(artistUrl).SelectToken("results").SelectToken("artistmatches").SelectToken("artist")[0];
-            Artist searchArtist = _artistsDb.GetBy(p => p.Name == name);
-            Artist artist = searchArtist != null ? searchArtist : new Artist(jsonData.SelectToken("name").ToString());
-            (string, string) biographies = GetArtistBiographies(name);
-            artist.ShortBiography = biographies.Item1;
-            artist.Biography = biographies.Item2;
-            artist.SetPictureLink(jsonData.SelectToken("image")[2].SelectToken("#text").ToString());
-            if (searchArtist == null)
+            JToken jsonToken = TakeJObjectFromLastFM(artistUrl).SelectToken("results");
+            if (jsonToken.SelectToken("opensearch:totalResults").ToString() != "0")
             {
-                _artistsDb.Create(artist);
+                JToken jsonData = jsonToken.SelectToken("artistmatches").SelectToken("artist")[0];
+                Artist searchArtist = _artistsDb.GetBy(p => p.Name == name);
+                Artist artist = searchArtist != null ? searchArtist : new Artist(jsonData.SelectToken("name").ToString());
+                (string, string) biographies = GetArtistBiographies(name);
+                artist.ShortBiography = biographies.Item1;
+                artist.Biography = biographies.Item2;
+                artist.SetPictureLink(jsonData.SelectToken("image")[2].SelectToken("#text").ToString());
+                if (searchArtist == null)
+                {
+                    _artistsDb.Create(artist);
+                }
+                else
+                {
+                    _artistsDb.Update(artist);
+                }
+                _artistsDb.Save();
+                return artist;
             }
-            else
-            {
-                _artistsDb.Update(artist);
-            }
-            _artistsDb.Save();
-            return artist;
+            return null;
         }
 
         public Album GetArtistAlbum(string artistName, string albumName)
@@ -212,9 +217,11 @@ namespace Service
         public JObject TakeJObjectFromLastFM(string url)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            string jsonFromLastFM = new StreamReader(response.GetResponseStream(), Encoding.UTF8).ReadToEnd();
-            return JObject.Parse(jsonFromLastFM);
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                string jsonFromLastFM = new StreamReader(response.GetResponseStream(), Encoding.UTF8).ReadToEnd();
+                return JObject.Parse(jsonFromLastFM);
+            }
         }
     }
 }
