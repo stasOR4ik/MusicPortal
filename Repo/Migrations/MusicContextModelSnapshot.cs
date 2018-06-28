@@ -87,6 +87,8 @@ namespace Repo.Migrations
 
                     b.Property<string>("Duration");
 
+                    b.Property<string>("Mp3Path");
+
                     b.Property<string>("Name");
 
                     b.Property<string>("PictureLink");
@@ -110,11 +112,11 @@ namespace Repo.Migrations
             modelBuilder.Entity("Core.ArtistSimilarArtist", b =>
                 {
                     b.HasOne("Core.Artist", "Artist")
-                        .WithMany()
+                        .WithMany("SimilarArtists")
                         .HasForeignKey("ArtistId");
 
                     b.HasOne("Core.Artist", "SimilarArtist")
-                        .WithMany("SimilarArtists")
+                        .WithMany()
                         .HasForeignKey("SimilarArtistId");
                 });
 

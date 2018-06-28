@@ -25,7 +25,7 @@ namespace Repo
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ArtistSimilarArtist>()
-                .HasOne(p => p.SimilarArtist)
+                .HasOne(p => p.Artist)
                 .WithMany(p => p.SimilarArtists);
         }
     }
