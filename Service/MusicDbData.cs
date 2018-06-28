@@ -51,6 +51,6 @@ namespace Service
             return album.Tracks == null || album.Artist == null ? null : album;
         }
 
-        Artist GetArtistByName(string name) => _artistsDb.GetBy(p => p.Name == name);
+        public Artist GetArtistByName(string name) => _artistsDb.GetBy(p => p.Name == name);
     }
 }

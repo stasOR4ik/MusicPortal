@@ -66,10 +66,15 @@ h1 {
     background-color: #F6F5F5;
 }
 
-input.margin_10px {
+.margin_10px {
     margin:10px;
 }
 
 #gif {
     display: block;
+}
+
+.glyphicon-download-alt {
+    float:right;
+    margin-top: 10px;
 }

@@ -30,11 +30,15 @@
             </div>
             <div class="navbar-collapse collapse">
                 @*<div class="row">
-                    <div class="col-lg-offset-7">
+                    <div class="col-lg-offset-8">
                         <form asp-controller="Home" asp-action="ArtistProfile">
                             <div class="row">
-                                <input type="search" name="name" id="name" class="col-lg-8 form-control margin_10px" />
-                                <input type="submit" value="Search" class="col-lg-2 btn btn-primary" />
+                                <div class="col-lg-8">
+                                    <input type="search" name="name" id="name" class="form-control margin_10px" />
+                                </div>
+                                <div class="col-lg-4">
+                                    <button type="submit" class="form-control margin_10px btn btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
+                                </div>
                             </div>
                         </form>
                     </div>

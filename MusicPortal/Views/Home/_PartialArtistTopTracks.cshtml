@@ -11,8 +11,17 @@
        <tr>
            <td>@counter</td>
            <td>
-               <img class="img-circle" src="@track.PictureLink" />
-               @track.Name
+               <div class="col-lg-11">
+                   <img class="img-circle" src="@track.PictureLink" />
+                   @track.Name
+               </div>
+               @if (track.Mp3Path != null)
+               {
+                   
+                   <div class="col-lg-1">
+                       <a href="@track.Mp3Path" download><span class="glyphicon glyphicon-download-alt"></span></a>
+                   </div>
+               }
            </td>
            <td>@track.Duration</td>
        </tr>

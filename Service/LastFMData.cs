@@ -154,7 +154,6 @@ namespace Service
                     _tracksDb.Update(track);
                 }
                 _tracksDb.Save();
-                //album.Tracks.Add(track);
             }
             return album;
         }

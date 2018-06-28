@@ -24,4 +24,9 @@
     <ProjectReference Include="..\Service\Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\audio\" />
+    <Folder Include="wwwroot\lib\audio\" />
+  </ItemGroup>
+
 </Project>
