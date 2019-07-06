@@ -15,9 +15,9 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Core\MusicPortal.Core.csproj" />
-    <ProjectReference Include="..\Repo\MusicPortal.Repo.csproj" />
-    <ProjectReference Include="..\Service\MusicPortal.Service.csproj" />
+    <ProjectReference Include="..\MusicPortal.Core\MusicPortal.Core.csproj" />
+    <ProjectReference Include="..\MusicPortal.Repo\MusicPortal.Repo.csproj" />
+    <ProjectReference Include="..\MusicPortal.Service\MusicPortal.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>

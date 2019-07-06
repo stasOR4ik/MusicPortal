@@ -174,7 +174,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\MusicPortal.Core.csproj">
+    <ProjectReference Include="..\MusicPortal.Core\MusicPortal.Core.csproj">
       <Project>{388ec11d-454f-48ec-be27-a6d463016519}</Project>
       <Name>MusicPortal.Core</Name>
     </ProjectReference>

@@ -52,11 +52,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\MusicPortal.Core.csproj">
+    <ProjectReference Include="..\MusicPortal.Core\MusicPortal.Core.csproj">
       <Project>{388EC11D-454F-48EC-BE27-A6D463016519}</Project>
       <Name>MusicPortal.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Repo\MusicPortal.Repo.csproj">
+    <ProjectReference Include="..\MusicPortal.Repo\MusicPortal.Repo.csproj">
       <Project>{4e6c5c9d-2535-4472-ba84-8c15d1b3a0ad}</Project>
       <Name>MusicPortal.Repo</Name>
     </ProjectReference>
