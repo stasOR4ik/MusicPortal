@@ -52,17 +52,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\MusicPortal.Core\MusicPortal.Core.csproj">
-      <Project>{388EC11D-454F-48EC-BE27-A6D463016519}</Project>
+      <Project>{388ec11d-454f-48ec-be27-a6d463016519}</Project>
       <Name>MusicPortal.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\MusicPortal.Repo\MusicPortal.Repo.csproj">
       <Project>{4e6c5c9d-2535-4472-ba84-8c15d1b3a0ad}</Project>
       <Name>MusicPortal.Repo</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

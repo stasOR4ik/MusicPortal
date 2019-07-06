@@ -39,7 +39,7 @@ namespace MusicPortal.Service
 
         public List<Artist> GetSimilarArtists(string name, int limit)
         {
-            List<Artist> artists = _musicDbData.GetSimilarArtists(name, limit);
+            List<Artist> artists = new List<Artist>();// = _musicDbData.GetSimilarArtists(name, limit);
             return artists.Count == 0 ? _lastFMData.GetSimilarArtists(name, limit) : artists;
         }
 
@@ -51,7 +51,7 @@ namespace MusicPortal.Service
 
         public Album GetArtistAlbum(string artistName, string albumName)
         {
-            Album album = _musicDbData.GetArtistAlbum(artistName, albumName);
+            Album album = null;//_musicDbData.GetArtistAlbum(artistName, albumName);
             return album == null ? _lastFMData.GetArtistAlbum(artistName, albumName) : album;
         }
     }

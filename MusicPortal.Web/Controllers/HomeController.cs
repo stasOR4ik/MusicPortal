@@ -5,12 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using MusicPortal.Core;
 using Microsoft.AspNetCore.Mvc;
-using MusicPortal.Models;
+using MusicPortal.Web.Models;
 using Newtonsoft.Json;
 using MusicPortal.Repo;
 using MusicPortal.Service;
 
-namespace MusicPortal.Controllers
+namespace MusicPortal.Web.Controllers
 {
     public class HomeController : Controller
     {

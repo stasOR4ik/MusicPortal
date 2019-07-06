@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MusicPortal.Models
+namespace MusicPortal.Web.Models
 {
     public class ArtistProfile
     {
