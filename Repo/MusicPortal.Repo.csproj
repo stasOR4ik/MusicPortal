@@ -7,10 +7,11 @@
     <ProjectGuid>{4E6C5C9D-2535-4472-BA84-8C15D1B3A0AD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Repo</RootNamespace>
-    <AssemblyName>Repo</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <RootNamespace>MusicPortal.Repo</RootNamespace>
+    <AssemblyName>MusicPortal.Repo</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -173,9 +174,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj">
+    <ProjectReference Include="..\Core\MusicPortal.Core.csproj">
       <Project>{388ec11d-454f-48ec-be27-a6d463016519}</Project>
-      <Name>Core</Name>
+      <Name>MusicPortal.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

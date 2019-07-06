@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Core;
+using MusicPortal.Core;
 using Microsoft.AspNetCore.Mvc;
 using MusicPortal.Models;
 using Newtonsoft.Json;
-using Repo;
-using Service;
+using MusicPortal.Repo;
+using MusicPortal.Service;
 
 namespace MusicPortal.Controllers
 {

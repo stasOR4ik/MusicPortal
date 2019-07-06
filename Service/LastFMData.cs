@@ -5,12 +5,12 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Core;
-using Repo;
+using MusicPortal.Core;
+using MusicPortal.Repo;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Service
+namespace MusicPortal.Service
 {
     public class LastFMData : IData
     {

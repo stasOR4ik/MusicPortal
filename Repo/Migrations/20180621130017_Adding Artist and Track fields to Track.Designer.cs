@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using Repo;
+using MusicPortal.Repo;
 using System;
 
-namespace Repo.Migrations
+namespace MusicPortal.Repo.Migrations
 {
     [DbContext(typeof(MusicContext))]
     [Migration("20180621130017_Adding Artist and Track fields to Track")]

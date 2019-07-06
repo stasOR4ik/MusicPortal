@@ -1,12 +1,12 @@
-﻿using Core;
-using Repo;
+﻿using MusicPortal.Core;
+using MusicPortal.Repo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service
+namespace MusicPortal.Service
 {
     public class DataElector : IData
     {

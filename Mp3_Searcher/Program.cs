@@ -1,18 +1,13 @@
-﻿using Core;
+﻿using MusicPortal.Core;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
-using MusicPortal;
-using Repo;
+using MusicPortal.Repo;
 using System;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Xml;
 
-namespace Mp3_Searcher
+namespace MusicPortal.Mp3_Searcher
 {
     class Program
     {

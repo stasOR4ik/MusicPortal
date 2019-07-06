@@ -7,10 +7,11 @@
     <ProjectGuid>{F44D2893-AC2C-4B61-BFE1-2E82E6702D33}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Service</RootNamespace>
-    <AssemblyName>Service</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <RootNamespace>MusicPortal.Service</RootNamespace>
+    <AssemblyName>MusicPortal.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,13 +52,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj">
+    <ProjectReference Include="..\Core\MusicPortal.Core.csproj">
       <Project>{388EC11D-454F-48EC-BE27-A6D463016519}</Project>
-      <Name>Core</Name>
+      <Name>MusicPortal.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Repo\Repo.csproj">
+    <ProjectReference Include="..\Repo\MusicPortal.Repo.csproj">
       <Project>{4e6c5c9d-2535-4472-ba84-8c15d1b3a0ad}</Project>
-      <Name>Repo</Name>
+      <Name>MusicPortal.Repo</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

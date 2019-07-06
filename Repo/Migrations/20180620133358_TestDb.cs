@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
-namespace Repo.Migrations
+namespace MusicPortal.Repo.Migrations
 {
     public partial class TestDb : Migration
     {

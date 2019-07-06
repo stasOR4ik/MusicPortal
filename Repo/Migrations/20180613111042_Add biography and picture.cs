@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Repo.Migrations
+namespace MusicPortal.Repo.Migrations
 {
     public partial class Addbiographyandpicture : Migration
     {

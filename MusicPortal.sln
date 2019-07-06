@@ -1,19 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29025.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicPortal", "MusicPortal\MusicPortal.csproj", "{F0E43AF4-CDA5-4C7F-8B09-E79439B339D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicPortal.Web", "MusicPortal\MusicPortal.Web.csproj", "{F0E43AF4-CDA5-4C7F-8B09-E79439B339D7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{AA4CA30F-F3C3-46B9-B9DA-BF45FDB648B5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MusicPortal.Domain", "MusicPortal.Domain", "{AA4CA30F-F3C3-46B9-B9DA-BF45FDB648B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repo", "Repo\Repo.csproj", "{4E6C5C9D-2535-4472-BA84-8C15D1B3A0AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPortal.Repo", "Repo\MusicPortal.Repo.csproj", "{4E6C5C9D-2535-4472-BA84-8C15D1B3A0AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{388EC11D-454F-48EC-BE27-A6D463016519}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPortal.Core", "Core\MusicPortal.Core.csproj", "{388EC11D-454F-48EC-BE27-A6D463016519}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{F44D2893-AC2C-4B61-BFE1-2E82E6702D33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPortal.Service", "Service\MusicPortal.Service.csproj", "{F44D2893-AC2C-4B61-BFE1-2E82E6702D33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mp3_Searcher", "Mp3_Searcher\Mp3_Searcher.csproj", "{850D1317-0D89-4DF7-8EAB-05BAB1426EA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicPortal.Searcher", "Mp3_Searcher\MusicPortal.Searcher.csproj", "{850D1317-0D89-4DF7-8EAB-05BAB1426EA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,7 +48,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4E6C5C9D-2535-4472-BA84-8C15D1B3A0AD} = {AA4CA30F-F3C3-46B9-B9DA-BF45FDB648B5}
 		{388EC11D-454F-48EC-BE27-A6D463016519} = {AA4CA30F-F3C3-46B9-B9DA-BF45FDB648B5}
-		{F44D2893-AC2C-4B61-BFE1-2E82E6702D33} = {AA4CA30F-F3C3-46B9-B9DA-BF45FDB648B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2ABBB2D9-32A6-4A96-AE82-7FDDC90DAC88}

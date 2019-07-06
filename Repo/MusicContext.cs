@@ -1,4 +1,4 @@
-﻿using Core;
+﻿using MusicPortal.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repo
+namespace MusicPortal.Repo
 {
     public class MusicContext : DbContext
     {

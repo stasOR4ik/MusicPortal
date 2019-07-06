@@ -1,4 +1,4 @@
-﻿using Core;
+﻿using MusicPortal.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
