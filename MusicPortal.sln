@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPortal.Repo", "MusicPo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPortal.Core", "MusicPortal.Core\MusicPortal.Core.csproj", "{388EC11D-454F-48EC-BE27-A6D463016519}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPortal.Service", "MusicPortal.Service\MusicPortal.Service.csproj", "{F44D2893-AC2C-4B61-BFE1-2E82E6702D33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPortal.Services", "MusicPortal.Services\MusicPortal.Services.csproj", "{F44D2893-AC2C-4B61-BFE1-2E82E6702D33}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicPortal.Searcher", "MusicPortal.Mp3_Searcher\MusicPortal.Searcher.csproj", "{850D1317-0D89-4DF7-8EAB-05BAB1426EA9}"
 EndProject

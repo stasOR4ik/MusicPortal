@@ -26,7 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MusicPortal.Core\MusicPortal.Core.csproj" />
     <ProjectReference Include="..\MusicPortal.Repo\MusicPortal.Repo.csproj" />
-    <ProjectReference Include="..\MusicPortal.Service\MusicPortal.Service.csproj" />
+    <ProjectReference Include="..\MusicPortal.Services\MusicPortal.Services.csproj" />
   </ItemGroup>
 
 </Project>

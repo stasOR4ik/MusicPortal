@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using MusicPortal.Web.Models;
 using Newtonsoft.Json;
 using MusicPortal.Repo;
-using MusicPortal.Service;
+using MusicPortal.Services;
 
 namespace MusicPortal.Web.Controllers
 {

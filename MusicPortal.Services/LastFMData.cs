@@ -10,7 +10,7 @@ using MusicPortal.Repo;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace MusicPortal.Service
+namespace MusicPortal.Services
 {
     public class LastFMData : IData
     {

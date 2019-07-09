@@ -8,7 +8,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace MusicPortal.Service
+namespace MusicPortal.Services
 {
     public class MusicDbData : IData
     {

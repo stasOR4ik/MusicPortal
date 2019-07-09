@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicPortal.Service
+namespace MusicPortal.Services
 {
     public class DataElector : IData
     {
